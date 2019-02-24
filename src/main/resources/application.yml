@@ -1,0 +1,19 @@
+# Inbound Adapters
+spring:
+    profiles: api
+---
+spring:
+  profiles: web
+---
+spring:
+  profiles: ws
+---
+#Outbound Adapters
+spring:
+  profiles: inmemory
+---
+spring:
+  profiles: jdbc
+---
+spring:
+  profiles: jpa
