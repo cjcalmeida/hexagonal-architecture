@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cjcalmeida.architecture</groupId>
 	<artifactId>hexagonal-architecture</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>hexagonal-architecture</name>
 	<description>Demo project for Spring Boot</description>
 
