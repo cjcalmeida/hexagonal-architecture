@@ -89,8 +89,8 @@ public class GameBusinessTest {
 
     @Test
     public void game_exists_on_get() throws Exception{
-        Mockito.when(infrastructure.exists(ArgumentMatchers.anyInt())).thenReturn(true);
-        Mockito.when(infrastructure.get(ArgumentMatchers.anyInt())).thenReturn(GameEntity.builder()
+        Mockito.when(infrastructure.exists(ArgumentMatchers.anyLong())).thenReturn(true);
+        Mockito.when(infrastructure.get(ArgumentMatchers.anyLong())).thenReturn(GameEntity.builder()
                 .id(1L)
                 .creationDate(new Date())
                 .description("Game very cool")
@@ -98,23 +98,23 @@ public class GameBusinessTest {
                 .releaseDate(new Date())
                 .build());
 
-        Assert.assertNotNull("Expected non null object", business.get(1));
+        Assert.assertNotNull("Expected non null object", business.get(1L));
     }
 
     @Test(expected = GameExceptions.GameNotFoundException.class)
     public void game_not_exists_on_get() throws Exception{
-        Mockito.when(infrastructure.exists(ArgumentMatchers.anyInt())).thenReturn(false);
-        business.get(1);
+        Mockito.when(infrastructure.exists(ArgumentMatchers.anyLong())).thenReturn(false);
+        business.get(1L);
     }
 
-    @Test
-    public void empty_list_on_list_all() {
+    @Test(expected = GameExceptions.GameNotFoundException.class)
+    public void empty_list_on_list_all() throws Exception{
         Mockito.when(infrastructure.listAll()).thenReturn(Collections.emptyList());
         business.listAll();
     }
 
     @Test
-    public void games_foud_on_list_all() {
+    public void games_foud_on_list_all() throws Exception {
         Mockito.when(infrastructure.listAll()).thenReturn(
                 Arrays.asList(GameEntity.builder()
                         .id(1L)

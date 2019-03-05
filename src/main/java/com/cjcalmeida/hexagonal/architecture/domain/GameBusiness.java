@@ -62,7 +62,7 @@ public final class GameBusiness implements IGameInboundPort {
     }
 
     @Override
-    public GameEntity get(Integer id) throws GameExceptions.GameNotFoundException {
+    public GameEntity get(Long id) throws GameExceptions.GameNotFoundException {
         if(!repository.exists(id)){
             log.error("Game with id {} not exists", id);
             throw new GameExceptions.GameNotFoundException();
@@ -72,9 +72,13 @@ public final class GameBusiness implements IGameInboundPort {
     }
 
     @Override
-    public Collection<GameEntity> listAll() {
+    public Collection<GameEntity> listAll() throws GameExceptions.GameNotFoundException {
         Collection<GameEntity> allGames = repository.listAll();
         log.debug("Found {} games", allGames.size());
+
+        if(allGames.isEmpty()){
+            throw new GameExceptions.GameNotFoundException();
+        }
         return allGames;
     }
 

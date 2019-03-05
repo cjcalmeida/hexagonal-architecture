@@ -50,14 +50,14 @@ public interface IGameOutboundPort {
      * @param id Game id
      * @return true - Game already exists with title, otherwise Game not exists
      */
-    boolean exists(final Integer id);
+    boolean exists(final Long id);
 
     /**
      * Returns Game that has Id
      * @param id Id of Game
      * @return All Game data
      */
-    GameEntity get(final Integer id);
+    GameEntity get(final Long id);
 
     /**
      * Search by Game title (like comparation)

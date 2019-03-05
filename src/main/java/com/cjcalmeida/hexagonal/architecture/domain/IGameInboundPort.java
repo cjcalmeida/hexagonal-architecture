@@ -46,13 +46,13 @@ public interface IGameInboundPort {
      * @return Entity with all data
      * @throws GameExceptions.GameNotFoundException No games found with id informed
      */
-    GameEntity get(final Integer id) throws GameExceptions.GameNotFoundException;
+    GameEntity get(final Long id) throws GameExceptions.GameNotFoundException;
 
     /**
      * List all Games
      * @return List of all Games
      */
-    Collection<GameEntity> listAll();
+    Collection<GameEntity> listAll() throws GameExceptions.GameNotFoundException;
 
     /**
      * Search all games with title like

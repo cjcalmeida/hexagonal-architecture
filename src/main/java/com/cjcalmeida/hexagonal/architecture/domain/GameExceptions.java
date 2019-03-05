@@ -23,6 +23,8 @@
 
 package com.cjcalmeida.hexagonal.architecture.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -32,13 +34,25 @@ import lombok.Getter;
  */
 public class GameExceptions {
 
+    @Getter
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GameException extends Exception {
+        private String messageKey;
+
+        private GameException(String messageKey, String message) {
+            super(message);
+            this.messageKey = messageKey;
+        }
+    }
+
     /**
      * Occurs when tries create a new Game that already exists <br>
      * <b>message-key:</b> game.already.exists
      */
-    @Getter
-    public final static class GameAlreadyExistsException extends Exception {
-        private String messageKey = "game.already.exists";
+    public final static class GameAlreadyExistsException extends GameException {
+        public GameAlreadyExistsException() {
+            super("game.already.exists");
+        }
     }
 
     /**
@@ -47,11 +61,9 @@ public class GameExceptions {
      * <b>message-key:</b> game.not.created
      */
     @Getter
-    public final static class GameNotCreatedException extends Exception {
-        private String messageKey = "game.not.created";
-
+    public final static class GameNotCreatedException extends GameException {
         public GameNotCreatedException(String message) {
-            super(message);
+            super("game.not.created", message);
         }
     }
 
@@ -60,7 +72,9 @@ public class GameExceptions {
      * <b>message-key:</b> game.not.found
      */
     @Getter
-    public final static class GameNotFoundException extends Exception {
-        private String messageKey = "game.not.found";
+    public final static class GameNotFoundException extends GameException {
+        public GameNotFoundException() {
+            super("game.not.found");
+        }
     }
 }
