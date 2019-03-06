@@ -29,7 +29,6 @@ import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
 import com.cjcalmeida.hexagonal.architecture.inbound.ws.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.jws.WebService;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -45,6 +44,7 @@ public class WsAdapter implements GamePort {
 
     private IGameInboundPort business;
     private static final String GAME_CREATED_RESPONSE = "CREATED";
+    private final ObjectFactory wsFactory = new ObjectFactory();
 
     @Autowired
     public WsAdapter(IGameInboundPort business) {
@@ -75,13 +75,13 @@ public class WsAdapter implements GamePort {
         long id = getGameRequest.getId();
         try{
             GameEntity entity = business.get(id);
-            FullGameInfo gameWs = new FullGameInfo();
+            FullGameInfo gameWs = wsFactory.createFullGameInfo();
             gameWs.setId(entity.getId());
             gameWs.setTitle(entity.getTitle());
             gameWs.setDescription(entity.getDescription());
             gameWs.setReleaseDate(toDate(entity.getReleaseDate()));
             gameWs.setCreationDate(toDate(entity.getCreationDate()));
-            GetGameResponse response = new GetGameResponse();
+            GetGameResponse response = wsFactory.createGetGameResponse();
             response.setGame(gameWs);
             return response;
         }catch (GameExceptions.GameNotFoundException e){
@@ -91,7 +91,7 @@ public class WsAdapter implements GamePort {
 
     @Override
     public ListGameResponse listGame(Object listGameRequest) throws GameFault_Exception {
-        ListGameResponse response = new ListGameResponse();
+        ListGameResponse response = wsFactory.createListGameResponse();
         try {
             response.getGame().addAll(
                     business.listAll().parallelStream()
@@ -106,7 +106,7 @@ public class WsAdapter implements GamePort {
     @Override
     public SearchGameResponse searchGame(SearchGameRequest searchGameRequest) throws GameFault_Exception {
         String query = searchGameRequest.getSearch();
-        SearchGameResponse response = new SearchGameResponse();
+        SearchGameResponse response = wsFactory.createSearchGameResponse();
         try {
             response.getGame().addAll(
                     business.find(query).parallelStream()
@@ -120,7 +120,7 @@ public class WsAdapter implements GamePort {
     }
 
     private FullGameInfo fromEntity(GameEntity entity){
-        FullGameInfo info = new FullGameInfo();
+        FullGameInfo info = wsFactory.createFullGameInfo();
         info.setId(entity.getId());
         info.setTitle(entity.getTitle());
         info.setDescription(entity.getDescription());
@@ -146,10 +146,10 @@ public class WsAdapter implements GamePort {
     }
 
     private GameFault_Exception throwGameFault(String messageKey, String cause){
-        GameFault gameFault = new GameFault();
+        GameFault gameFault = wsFactory.createGameFault();
         gameFault.setMessageKey(messageKey);
         gameFault.setReason(cause);
-        Fault fault = new Fault();
+        Fault fault = wsFactory.createFault();
         fault.setFault(gameFault);
 
         return new GameFault_Exception(null, fault);
