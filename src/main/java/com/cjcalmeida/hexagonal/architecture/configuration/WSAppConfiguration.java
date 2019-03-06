@@ -23,26 +23,43 @@
 
 package com.cjcalmeida.hexagonal.architecture.configuration;
 
+import com.cjcalmeida.hexagonal.architecture.Application;
 import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
 import com.cjcalmeida.hexagonal.architecture.inbound.WsAdapter;
 import com.cjcalmeida.hexagonal.architecture.inbound.ws.GamePort;
+import com.revinate.ws.spring.SDDocumentCollector;
 import com.revinate.ws.spring.SpringService;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 import com.sun.xml.ws.transport.http.servlet.WSSpringServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.Resource;
 
 import javax.xml.namespace.QName;
+import java.net.URL;
+import java.util.Collection;
+import java.util.Map;
 
 @Profile("ws")
 @Configuration
 @AutoConfigureAfter(AppConfiguration.class)
 public class WSAppConfiguration {
+
+    private static final Collection<Object> GAME_SERVICE_METADATA;
+    private static final Object GAME_SERVICE_PRIMARY_WSDL;
+
+    static {
+        ClassLoader cl = Application.class.getClassLoader();
+        Map<URL, Object> docs = SDDocumentCollector.collectDocs("wsdl", cl);
+        GAME_SERVICE_METADATA = docs.values();
+        GAME_SERVICE_PRIMARY_WSDL = docs.get(cl.getResource("wsdl/game.wsdl"));
+    }
 
     @Bean
     @Autowired
@@ -57,11 +74,13 @@ public class WSAppConfiguration {
 
     @Bean
     @Autowired
-    public SpringService gameService(GamePort port) {
+    public SpringService gameService(GamePort port) throws Exception{
         SpringService service = new SpringService();
         service.setBean(port);
         service.setServiceName(new QName("http://github.com/cjcalmeida/hexagonal-architecture/games/", "GamePortService"));
-        service.setPortName(new QName("http://github.com/cjcalmeida/hexagonal-architecture/games/", "GamePort"));
+        service.setPortName(new QName("http://github.com/cjcalmeida/hexagonal-architecture/games/", "GamePortSoap"));
+        service.setPrimaryWsdl(GAME_SERVICE_PRIMARY_WSDL);
+        service.setMetadata(GAME_SERVICE_METADATA);
         return service;
     }
 
