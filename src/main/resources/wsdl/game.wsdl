@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:game="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/"
+                  xmlns:tns="http://github.com/cjcalmeida/hexagonal-architecture/games/"
+                  xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/">
+            <!-- Schema Canonical -->
+            <xs:import namespace="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/" schemaLocation="xsd/games-schema.xsd"/>
+
+            <!-- Requests and Responses -->
+            <xs:element name="createGameRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="game" type="game:BasicGameInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="createGameResponse">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="CREATED" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="getGameRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getGameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="game" type="game:FullGameInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="listGameRequest">
+            </xs:element>
+
+            <xs:element name="listGameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="game" maxOccurs="unbounded" type="game:FullGameInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="searchGameRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="search" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="searchGameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="game" maxOccurs="unbounded" type="game:FullGameInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fault" type="game:GameFault" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <!-- Messages -->
+    <wsdl:message name="CreateGameRequest">
+        <wsdl:part name="CreateGameRequest" element="tns:createGameRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="CreateGameResponse">
+        <wsdl:part name="CreateGameResponse" element="tns:createGameResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="GetGameRequest">
+        <wsdl:part name="GetGameRequest" element="tns:getGameRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="GetGameResponse">
+        <wsdl:part name="GetGameResponse" element="tns:getGameResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="ListGameRequest">
+        <wsdl:part name="ListGameRequest" element="tns:listGameRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="ListGameResponse">
+        <wsdl:part name="ListGameResponse" element="tns:listGameResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="SearchGameRequest">
+        <wsdl:part name="SearchGameRequest" element="tns:searchGameRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="SearchGameResponse">
+        <wsdl:part name="SearchGameResponse" element="tns:searchGameResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="GameFault">
+        <wsdl:part name="GameFault" element="tns:fault" />
+    </wsdl:message>
+
+    <!-- Port -->
+    <wsdl:portType name="GamePort">
+        <wsdl:operation name="createGame">
+            <wsdl:input message="tns:CreateGameRequest" name="createGameRequest" />
+            <wsdl:output message="tns:CreateGameResponse" name="createGameResponse" />
+            <wsdl:fault name="fault" message="tns:GameFault" />
+        </wsdl:operation>
+
+        <wsdl:operation name="getGame">
+            <wsdl:input message="tns:GetGameRequest" name="getGameRequest" />
+            <wsdl:output message="tns:GetGameResponse" name="getGameResponse" />
+            <wsdl:fault name="fault" message="tns:GameFault" />
+        </wsdl:operation>
+
+        <wsdl:operation name="listGame">
+            <wsdl:input message="tns:ListGameRequest" name="listGameRequest" />
+            <wsdl:output message="tns:ListGameResponse" name="listGameResponse" />
+            <wsdl:fault name="fault" message="tns:GameFault" />
+        </wsdl:operation>
+
+        <wsdl:operation name="searchGame">
+            <wsdl:input message="tns:SearchGameRequest" name="searchGameRequest" />
+            <wsdl:output message="tns:SearchGameResponse" name="searchGameResponse" />
+            <wsdl:fault name="fault" message="tns:GameFault" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Binding -->
+    <wsdl:binding name="GamePortSoap" type="tns:GamePort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="createGame">
+            <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/CreateGame" />
+            <wsdl:input name="createGameRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="createGameResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="getGame">
+            <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/GetGame" />
+            <wsdl:input name="getGameRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="getGameResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="listGame">
+            <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/ListGame" />
+            <wsdl:input name="listGameRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="listGameResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchGame">
+            <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/SearchGame" />
+            <wsdl:input name="searchGameRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="searchGameResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Service -->
+    <wsdl:service name="GamePortService">
+        <wsdl:port name="GamePortSoap" binding="tns:GamePortSoap">
+            <soap:address location="http://localhost:8080/ws/Game" />
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

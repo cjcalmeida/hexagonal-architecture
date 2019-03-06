@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:game="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/"
+           targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/" elementFormDefault="qualified">
+
+    <xs:complexType name="BasicGameInfo">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string" />
+            <xs:element name="description" type="xs:string" />
+            <xs:element name="release_date" type="xs:date" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FullGameInfo">
+        <xs:complexContent>
+            <xs:extension base="game:BasicGameInfo">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long" />
+                    <xs:element name="creation_date" type="xs:dateTime" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GameFault">
+        <xs:sequence>
+            <xs:element name="message_key" type="xs:string" />
+            <xs:element name="reason" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
