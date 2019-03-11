@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+</head>
+<body>
+    <div th:fragment="list">
+        <div class="row">
+
+            <!-- Novo Game -->
+            <div class="col-md-3">
+                <a href="/web/game/new" class="app-btn btn" th:text="#{button.new}">New Game</a>
+            </div>
+
+            <!-- Busca -->
+            <div class="col-md-9">
+                <div class="jumbotron jumbotron-fluid px-2 py-1 app-black">
+                    <div class="container">
+                        <form class="app-search form-inline md-form form-md my-2 ml-4 mr-0" method="get">
+                            <input name="q" type="text" class="form-control form-control-sm mr-3 w-75 " th:placeholder="#{input.search}" aria-label="Search" th:value="${param.q}">
+                            <button class="btn app-btn-outline btn-sm" type="submit">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Erro -->
+        <div class="row" th:if="${error}">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert" th:text="#{${error}}">
+                    A simple danger alert—check it out!
+                </div>
+            </div>
+        </div>
+
+        <!-- Dados -->
+        <div class="row" th:if="${games}">
+            <div class="col-md-12">
+                <div class="jumbotron text-center app-black p-4">
+                    <table class="table table-striped table-responsive-md table-sm">
+                        <thead class="white-text">
+                        <tr>
+                            <th>#</th>
+                            <th th:text="#{title}">Title</th>
+                            <th th:text="#{description}">Description</th>
+                            <th th:text="#{release}">Release Date</th>
+                            <th th:text="#{creation}">Creation Date</th>
+                        </tr>
+                        </thead>
+                        <tbody class="grey-text">
+                        <tr th:each="game : ${games}">
+                            <td><a href="#" class="app-link" th:href="@{/web/game/{id}(id=${game.id})}" th:text="${game.id}">1</a></td>
+                            <td th:text="${game.title}">Game</td>
+                            <td th:text="${game.description}">The Game</td>
+                            <td th:text="${#calendars.format(game.releaseDate,'dd/MM/yyyy')}">01/02/2001</td>
+                            <td th:text="${#calendars.format(game.creationDate,'dd/MM/yyyy HH:mm:ss')}">10/03/2019</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- Jumbotron -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

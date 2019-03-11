@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<con:soapui-project id="a34f7d5e-e1e4-48ca-8eb6-eb5eff1ff0db" activeEnvironment="Default" name="Game" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="43578513-558c-4661-a0b0-a23b66bad414" wsaVersion="NONE" name="GamePortSoap" type="wsdl" bindingName="{http://github.com/cjcalmeida/hexagonal-architecture/games/}GamePortSoap" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ws/Game?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ws/Game?wsdl"><con:part><con:url>http://localhost:8080/ws/Game?wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980.-->
+<!--~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
+<wsdl:definitions targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:game="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/" xmlns:tns="http://github.com/cjcalmeida/hexagonal-architecture/games/" xmlns="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <!--Schema Canonical-->
+      <xs:import namespace="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/" schemaLocation="http://localhost:8080/ws/Game?xsd=1"/>
+      <!--Requests and Responses-->
+      <xs:element name="createGameRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="game" type="game:BasicGameInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createGameResponse">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="CREATED"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="getGameRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getGameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="game" type="game:FullGameInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="listGameRequest"></xs:element>
+      <xs:element name="listGameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="game" maxOccurs="unbounded" type="game:FullGameInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="searchGameRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="search" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="searchGameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="game" maxOccurs="unbounded" type="game:FullGameInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="fault">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="fault" type="game:GameFault"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <!--Messages-->
+  <wsdl:message name="CreateGameRequest">
+    <wsdl:part name="CreateGameRequest" element="tns:createGameRequest"/>
+  </wsdl:message>
+  <wsdl:message name="CreateGameResponse">
+    <wsdl:part name="CreateGameResponse" element="tns:createGameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGameRequest">
+    <wsdl:part name="GetGameRequest" element="tns:getGameRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetGameResponse">
+    <wsdl:part name="GetGameResponse" element="tns:getGameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListGameRequest">
+    <wsdl:part name="ListGameRequest" element="tns:listGameRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ListGameResponse">
+    <wsdl:part name="ListGameResponse" element="tns:listGameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchGameRequest">
+    <wsdl:part name="SearchGameRequest" element="tns:searchGameRequest"/>
+  </wsdl:message>
+  <wsdl:message name="SearchGameResponse">
+    <wsdl:part name="SearchGameResponse" element="tns:searchGameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GameFault">
+    <wsdl:part name="GameFault" element="tns:fault"/>
+  </wsdl:message>
+  <!--Port-->
+  <wsdl:portType name="GamePort">
+    <wsdl:operation name="createGame">
+      <wsdl:input message="tns:CreateGameRequest" name="createGameRequest"/>
+      <wsdl:output message="tns:CreateGameResponse" name="createGameResponse"/>
+      <wsdl:fault name="fault" message="tns:GameFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="getGame">
+      <wsdl:input message="tns:GetGameRequest" name="getGameRequest"/>
+      <wsdl:output message="tns:GetGameResponse" name="getGameResponse"/>
+      <wsdl:fault name="fault" message="tns:GameFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="listGame">
+      <wsdl:input message="tns:ListGameRequest" name="listGameRequest"/>
+      <wsdl:output message="tns:ListGameResponse" name="listGameResponse"/>
+      <wsdl:fault name="fault" message="tns:GameFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="searchGame">
+      <wsdl:input message="tns:SearchGameRequest" name="searchGameRequest"/>
+      <wsdl:output message="tns:SearchGameResponse" name="searchGameResponse"/>
+      <wsdl:fault name="fault" message="tns:GameFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!--Binding-->
+  <wsdl:binding name="GamePortSoap" type="tns:GamePort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createGame">
+      <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/CreateGame"/>
+      <wsdl:input name="createGameRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createGameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getGame">
+      <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/GetGame"/>
+      <wsdl:input name="getGameRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getGameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listGame">
+      <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/ListGame"/>
+      <wsdl:input name="listGameRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listGameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchGame">
+      <soap:operation soapAction="http://github.com/cjcalmeida/hexagonal-architecture/games/SearchGame"/>
+      <wsdl:input name="searchGameRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchGameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!--Service-->
+  <wsdl:service name="GamePortService">
+    <wsdl:port name="GamePortSoap" binding="tns:GamePortSoap">
+      <soap:address location="http://localhost:8080/ws/Game"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/ws/Game?xsd=1</con:url><con:content><![CDATA[<!--Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.8 svn-revision#13980.-->
+<!--~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
+<xs:schema targetNamespace="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:game="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/">
+  <xs:complexType name="BasicGameInfo">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="release_date" type="xs:date"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FullGameInfo">
+    <xs:complexContent>
+      <xs:extension base="game:BasicGameInfo">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long"/>
+          <xs:element name="creation_date" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GameFault">
+    <xs:sequence>
+      <xs:element name="message_key" type="xs:string"/>
+      <xs:element name="reason" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws/Game</con:endpoint></con:endpoints><con:operation id="ee3de25a-419b-4ae6-8c7a-20a98e16c458" isOneWay="false" action="http://github.com/cjcalmeida/hexagonal-architecture/games/CreateGame" name="createGame" bindingOperationName="createGame" type="Request-Response" inputName="createGameRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional" outputName="createGameResponse"><con:settings/><con:call id="9e15d6f9-9b85-4c60-9735-04182bab4f79" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/Game</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gam="http://github.com/cjcalmeida/hexagonal-architecture/games/" xmlns:sch="http://github.com/cjcalmeida/hexagonal-architecture/games/schemas/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gam:createGameRequest>\r
+         <game>\r
+            <sch:title>Game WS</sch:title>\r
+            <sch:description>WS Game Description</sch:description>\r
+            <sch:release_date>2000-01-01</sch:release_date>\r
+         </game>\r
+      </gam:createGameRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://github.com/cjcalmeida/hexagonal-architecture/games/CreateGame"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="653a3b5f-03d5-4872-945c-6cc843eac8df" isOneWay="false" action="http://github.com/cjcalmeida/hexagonal-architecture/games/GetGame" name="getGame" bindingOperationName="getGame" type="Request-Response" inputName="getGameRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional" outputName="getGameResponse"><con:settings/><con:call id="0b287176-6772-4ee7-82cd-bb6f726d2413" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/Game</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gam="http://github.com/cjcalmeida/hexagonal-architecture/games/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gam:getGameRequest>\r
+         <id>1</id>\r
+      </gam:getGameRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://github.com/cjcalmeida/hexagonal-architecture/games/GetGame"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="43801539-4e58-446e-8678-6f228cdf1f4e" isOneWay="false" action="http://github.com/cjcalmeida/hexagonal-architecture/games/ListGame" name="listGame" bindingOperationName="listGame" type="Request-Response" inputName="listGameRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional" outputName="listGameResponse"><con:settings/><con:call id="0a1fe585-da7e-403e-ac1b-ff0a7103f306" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/Game</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gam="http://github.com/cjcalmeida/hexagonal-architecture/games/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gam:listGameRequest></gam:listGameRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://github.com/cjcalmeida/hexagonal-architecture/games/ListGame"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="369f2eec-0f45-4923-9b1c-9fe45a022800" isOneWay="false" action="http://github.com/cjcalmeida/hexagonal-architecture/games/SearchGame" name="searchGame" bindingOperationName="searchGame" type="Request-Response" inputName="searchGameRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional" outputName="searchGameResponse"><con:settings/><con:call id="f379bed8-7f8a-4150-8763-868d6cd44ba3" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/Game</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gam="http://github.com/cjcalmeida/hexagonal-architecture/games/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <gam:searchGameRequest>\r
+         <search>WS</search>\r
+      </gam:searchGameRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://github.com/cjcalmeida/hexagonal-architecture/games/SearchGame"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

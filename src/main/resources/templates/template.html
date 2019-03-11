@@ -1,0 +1,223 @@
+<!--
+  ~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.4/css/mdb.min.css" rel="stylesheet">
+        <link href="/static/css/app.css" rel="stylesheet">
+        <title>Hexagonal Architecture - Game</title>
+    </head>
+    <body class="app-background" style="">
+
+        <!-- Menu -->
+        <nav class="navbar navbar-expand-md navbar-dark app-black mb-5 py-3">
+            <a class="navbar-brand app-font" href="/web/game"><strong>Hexagonal Architecture - Games</strong></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link app-font" href="#" data-toggle="modal" data-target="#docsModal" th:text="#{menu.docs}">Docs</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto nav-flex-icons">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link app-font dropdown-toggle" id="settings" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fas fa-sliders-h"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="settings">
+                            <a class="dropdown-item" href="?lang=en_US" th:text="#{menu.english}">Inglês</a>
+                            <a class="dropdown-item" href="?lang=pt_BR" th:text="#{menu.portuguese}">Português</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div th:replace="${fragment}">
+                <div class="row">
+
+                    <!-- Novo Game -->
+                    <div class="col-md-3">
+                        <button class="app-btn btn">New Game</button>
+                    </div>
+
+                    <!-- Busca -->
+                    <div class="col-md-9">
+                        <div class="jumbotron jumbotron-fluid px-2 py-1 app-black">
+                            <div class="container">
+                                <form class="app-search form-inline md-form form-md my-2 ml-4 mr-0">
+                                    <input class="form-control form-control-sm mr-3 w-75 " type="text" placeholder="Search" aria-label="Search">
+                                    <button class="btn app-btn-outline btn-sm"><i class="fas fa-search" aria-hidden="true"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Erro -->
+                <div class="row" th:if="${error}">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert" th:text="${error}">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="jumbotron text-center app-black p-4">
+                            <table class="table table-striped table-responsive-md table-sm">
+                                <thead class="white-text">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Release Date</th>
+                                    <th>Creation Date</th>
+                                </tr>
+                                </thead>
+                                <tbody class="grey-text">
+                                <tr>
+                                    <td><a href="#" class="app-link">1</a></td>
+                                    <td>Game</td>
+                                    <td>The Game</td>
+                                    <td>01/02/2001</td>
+                                    <td>10/03/2019</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>New Game</td>
+                                    <td>The Game Fast And Furious</td>
+                                    <td>01/02/2001</td>
+                                    <td>10/03/2019</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- Jumbotron -->
+                    </div>
+                </div>
+
+                <!-- Form Create -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card app-black mb-4">
+                            <div class="card-header app-link">New Game</div>
+                            <div class="card-body text-primary">
+                                <div class="card-text">
+                                    <form class="app-search md-form mx-4 my-0 p-0">
+                                        <div class="form-row invisible" style="display:none">
+                                            <div class="col-md-6">
+                                                <div class="md-form form-group">
+                                                    <input type="text" name="id" id="id" class="form-control" disabled>
+                                                    <label for="id" class="disabled">ID</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="md-form form-group">
+                                                    <input type="text" name="creationDate" id="creationDate" class="form-control" disabled>
+                                                    <label for="creationDate" class="disabled">Creation Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-8">
+                                                <div class="md-form form-group">
+                                                    <input type="text" name="title" id="title" class="form-control">
+                                                    <label for="title">Title</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="md-form form-group">
+                                                    <input type="text" name="releaseDate" id="releaseDate" class="form-control">
+                                                    <label for="releaseDate">Release Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="md-form form-group">
+                                                    <textarea id="description" name="description" class="md-textarea form-control" rows="2"></textarea>
+                                                    <label for="description">Description</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-2">
+                                                <button class="btn btn-info">Create</button>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-danger">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="docsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{menu.docs}">Documentations</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="X">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group">
+                            <a type="button" class="list-group-item list-group-item-action" href="/static/docs/game-postman-collection.postman_collection">Postman Collection (Rest API)</a>
+                            <a type="button" class="list-group-item list-group-item-action" href="/static/docs/game-soapui-project.xml" target="_blank">SOAP UI Project (Web Services API)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.4/js/mdb.min.js"></script>
+        <script type="text/javascript" src="/static/js/app.js"></script>
+    </body>
+</html>

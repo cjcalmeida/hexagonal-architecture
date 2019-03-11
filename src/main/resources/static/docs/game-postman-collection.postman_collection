@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "9d5c7fe6-b966-4440-a65e-9dd07bbe0fda",
+		"name": "Hexagonal Architecture - Game",
+		"description": "API Requests to Hexagonal Architecture",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Game",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Game {{$randomInt}}\",\n\t\"description\": \"Game description to {{$randomInt}}\",\n\t\"releaseDate\": {{timestamp_sample}}\n}"
+				},
+				"url": {
+					"raw": "{{host}}:{{port}}/api/game",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"game"
+					]
+				},
+				"description": "Sample Request to Create a Game"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Game",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}:{{port}}/api/game/1",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"game",
+						"1"
+					]
+				},
+				"description": "Get game by id"
+			},
+			"response": []
+		},
+		{
+			"name": "List All Games",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}:{{port}}/api/game",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"game"
+					]
+				},
+				"description": "List All Games"
+			},
+			"response": []
+		},
+		{
+			"name": "Seach Game",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}:{{port}}/api/game?q={{$randomInt}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"game"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{$randomInt}}"
+						}
+					]
+				},
+				"description": "Search a Game by Title"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "cef859f2-e23d-4c8f-8f21-fe7b0f9042c3",
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"id": "a9653072-d922-41b0-856e-bd21bb5f53f2",
+			"key": "port",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"id": "992e1a60-8293-45bf-8dc0-a5dfca514417",
+			"key": "timestamp_sample",
+			"value": "1551671370431",
+			"type": "string"
+		}
+	]
+}

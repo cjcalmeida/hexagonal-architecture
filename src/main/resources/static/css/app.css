@@ -1,0 +1,56 @@
+html {
+    height: 100%;
+}
+
+.app-background {
+    background-color: #737586;
+    linear-gradient(120deg, #737586 30%, #434658)
+    background-size: 100% 100%
+}
+
+.app-black {
+    background-color: #37384B;
+}
+
+.app-btn {
+    color: white;
+    background: #5CA1EC;
+    margin: 0;
+    padding: 25px 34px;
+    width: 100%;
+}
+
+.app-btn:hover,
+.app-btn:active,
+.app-btn:focus {
+    color: white;
+}
+
+.app-btn-outline:hover,
+.app-btn-outline {
+    color: #5CA1EC;
+    border: 2px solid #5CA1EC;
+    background-color: transparent!important;
+}
+
+.app-search input[type=text],
+.app-search textarea.md-textarea {
+    font-weight: 400;
+    color: #5CA1EC;
+    box-shadow: 0 1px 0 0 #5CA1EC;
+    border-bottom: 1px solid #5CA1EC;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+    color: #C5C4CA;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+    font-weight: 400;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover,
+.app-link {
+    color: #5CA1EC !important;
+    font-weight: 400;
+}

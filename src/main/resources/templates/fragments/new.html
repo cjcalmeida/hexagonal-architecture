@@ -1,0 +1,101 @@
+<!--
+  ~ Copyright (c) 2019 Cristiano Almeida
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+</head>
+<body>
+    <div>
+        <!-- Erro -->
+        <div class="row" th:if="${error}">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert" th:text="#{${error}}">
+                    A simple danger alert—check it out!
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Create -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card app-black mb-4">
+                    <div class="card-header app-link" th:text="${view}? #{text.view} : #{text.new}">New Game</div>
+                    <div class="card-body text-primary">
+                        <div class="card-text">
+                            <form class="app-search md-form mx-4 my-0 p-0" method="post">
+                                <div th:if="${view}" class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="md-form form-group">
+                                            <input type="text" name="id" id="id" class="form-control" disabled th:value="${data.id}">
+                                            <label for="id" class="disabled" th:text="#{id}">ID</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="md-form form-group">
+                                            <input type="text" name="creationDate" id="creationDate" class="form-control" disabled th:value="${data.creation}">
+                                            <label for="creationDate" class="disabled" th:text="#{creation}">Creation Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-8">
+                                        <div class="md-form form-group">
+                                            <input type="text" name="title" id="title" class="form-control" th:value="${data.title}" th:disabled="${view}">
+                                            <label for="title" th:class="${view} ? 'disabled'" th:text="#{title}">Title</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="md-form form-group">
+                                            <input type="text" name="release" id="releaseDate" class="form-control" th:value="${data.release}" th:disabled="${view}">
+                                            <label for="releaseDate" th:class="${view} ? 'disabled'" th:text="#{release}">Release Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="md-form form-group">
+                                            <textarea id="description" name="description" class="md-textarea form-control" rows="2" th:text="${data.description}" th:disabled="${view}"></textarea>
+                                            <label for="description" th:class="${view} ? 'disabled'" th:text="#{description}">Description</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2" th:if="${!view}">
+                                        <button class="btn btn-info" type="submit" th:text="#{button.create}">Create</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="/web/game" class="btn btn-danger" th:text="#{button.cancel}">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
