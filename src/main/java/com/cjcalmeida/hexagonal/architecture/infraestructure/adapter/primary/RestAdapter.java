@@ -21,15 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.inbound;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.domain.GameExceptions;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -43,20 +44,22 @@ import java.util.stream.Collectors;
 @Profile("api")
 @RestController
 @RequestMapping("/api/game")
+@Slf4j
 public class RestAdapter {
 
-    private IGameInboundPort business;
+    private IGameUseCase service;
 
     @Autowired
-    public RestAdapter(IGameInboundPort business) {
-        this.business = business;
+    public RestAdapter(IGameUseCase service) {
+        log.info("Initializing API Adapter");
+        this.service = service;
     }
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody GameRepresentation game)
             throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException{
-        business.create(
-                GameEntity.builder()
+        service.create(
+                Game.builder()
                 .title(game.getTitle())
                 .description(game.getDescription())
                 .releaseDate(game.getReleaseDate())
@@ -67,7 +70,7 @@ public class RestAdapter {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") Long id) throws GameExceptions.GameNotFoundException {
-        GameEntity game = business.get(id);
+        Game game = service.get(id);
         FullGameRepresentation representation = new FullGameRepresentation();
         representation.setId(game.getId());
         representation.setTitle(game.getTitle());
@@ -81,11 +84,11 @@ public class RestAdapter {
     public ResponseEntity<?> find(@RequestParam(required = false, name = "q") String title)
             throws GameExceptions.GameNotFoundException{
 
-        Collection<GameEntity> results;
+        Collection<Game> results;
         if(title == null || title.isEmpty()) {
-            results = business.listAll();
+            results = service.listAll();
         }else{
-            results = business.find(title);
+            results = service.find(title);
         }
 
         Collection<FullGameRepresentation> representations = results.parallelStream()

@@ -98,7 +98,7 @@
 				<configuration>
 					<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
 					<sourceDestDir>target/generated-sources/wsimport</sourceDestDir>
-					<packageName>com.cjcalmeida.hexagonal.architecture.inbound.ws</packageName>
+					<packageName>com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws</packageName>
 					<keep>true</keep>
 					<verbose>true</verbose>
 					<vmArgs>
@@ -106,6 +106,7 @@
 					</vmArgs>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

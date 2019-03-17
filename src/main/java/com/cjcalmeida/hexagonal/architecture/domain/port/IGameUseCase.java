@@ -21,7 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.domain;
+package com.cjcalmeida.hexagonal.architecture.domain.port;
+
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 
 import java.util.Collection;
 
@@ -29,7 +32,7 @@ import java.util.Collection;
  * <b>Inbound Port</b><br>
  * Business operations to Game Domain
  */
-public interface IGameInboundPort {
+public interface IGameUseCase {
 
     /**
      * Create a new Game
@@ -38,7 +41,7 @@ public interface IGameInboundPort {
      * @throws GameExceptions.GameAlreadyExistsException Game already exists
      * @throws GameExceptions.GameNotCreatedException Game cant be created
      */
-    boolean create(GameEntity game) throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException;
+    boolean create(final Game game) throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException;
 
     /**
      * Obtain the Game by Id
@@ -46,13 +49,13 @@ public interface IGameInboundPort {
      * @return Entity with all data
      * @throws GameExceptions.GameNotFoundException No games found with id informed
      */
-    GameEntity get(final Long id) throws GameExceptions.GameNotFoundException;
+    Game get(final Long id) throws GameExceptions.GameNotFoundException;
 
     /**
      * List all Games
      * @return List of all Games
      */
-    Collection<GameEntity> listAll() throws GameExceptions.GameNotFoundException;
+    Collection<Game> listAll() throws GameExceptions.GameNotFoundException;
 
     /**
      * Search all games with title like
@@ -60,6 +63,6 @@ public interface IGameInboundPort {
      * @return List of all Games with title match
      * @throws GameExceptions.GameNotFoundException No games found with title searched
      */
-    Collection<GameEntity> find(String title) throws GameExceptions.GameNotFoundException;
+    Collection<Game> find(String title) throws GameExceptions.GameNotFoundException;
 
 }

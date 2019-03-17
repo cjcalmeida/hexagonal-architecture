@@ -21,12 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameOutboundPort;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,13 +33,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link IGameOutboundPort} <br>
+ * Implementation of {@link IGameRepositoryPort} <br>
  * Implements in Memory Adapter strategy
  */
 @Slf4j
-public class InMemoryAdapter implements IGameOutboundPort {
+public class InMemoryAdapter implements IGameRepositoryPort {
 
-    private Map<Long, GameEntity> data;
+    private Map<Long, Game> data;
     private Long avaliableId;
 
     public InMemoryAdapter() {
@@ -50,10 +49,16 @@ public class InMemoryAdapter implements IGameOutboundPort {
     }
 
     @Override
-    public synchronized void add(GameEntity entity) {
+    public synchronized void add(Game entity) {
         log.debug("Adding new Game {}", entity.getTitle());
-        entity.setId(this.avaliableId);
-        data.put(this.avaliableId, entity);
+        data.put(this.avaliableId, Game.builder()
+                .id(this.avaliableId)
+                .title(entity.getTitle())
+                .description(entity.getDescription())
+                .creationDate(entity.getCreationDate())
+                .releaseDate(entity.getReleaseDate())
+                .build()
+        );
         this.avaliableId += 1;
     }
 
@@ -71,20 +76,20 @@ public class InMemoryAdapter implements IGameOutboundPort {
     }
 
     @Override
-    public GameEntity get(Long id) {
+    public Game get(Long id) {
         log.debug("Geting Game with id {}", id);
         return data.get(id);
     }
 
     @Override
-    public Collection<GameEntity> findByTitleLike(String title) {
+    public Collection<Game> findByTitleLike(String title) {
         log.debug("Searching Game with title %{}%", title);
         return data.values().parallelStream()
                 .filter(item -> item.getTitle().contains(title)).collect(Collectors.toList());
     }
 
     @Override
-    public Collection<GameEntity> listAll() {
+    public Collection<Game> listAll() {
         log.debug("Retrieve all games");
         return data.values();
     }

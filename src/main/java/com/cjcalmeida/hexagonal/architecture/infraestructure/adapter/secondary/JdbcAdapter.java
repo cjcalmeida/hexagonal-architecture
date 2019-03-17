@@ -21,10 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameOutboundPort;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -37,7 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JdbcAdapter implements IGameOutboundPort {
+public class JdbcAdapter implements IGameRepositoryPort {
 
     private NamedParameterJdbcTemplate jdbc;
     private GameMapper mapper;
@@ -49,7 +49,7 @@ public class JdbcAdapter implements IGameOutboundPort {
     }
 
     @Override
-    public void add(GameEntity entity) {
+    public void add(Game entity) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("title", entity.getTitle());
         params.addValue("description", entity.getDescription());
@@ -76,28 +76,28 @@ public class JdbcAdapter implements IGameOutboundPort {
     }
 
     @Override
-    public GameEntity get(Long id) {
+    public Game get(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return jdbc.query("SELECT * FROM Game WHERE id = :id", params, mapper).get(0);
     }
 
     @Override
-    public Collection<GameEntity> findByTitleLike(String title) {
+    public Collection<Game> findByTitleLike(String title) {
         Map<String, Object> params = new HashMap<>();
         params.put("title", "%"+title+"%");
         return jdbc.query("SELECT * FROM Game WHERE title LIKE :title", params, mapper);
     }
 
     @Override
-    public Collection<GameEntity> listAll() {
+    public Collection<Game> listAll() {
         return jdbc.query("SELECT * FROM Game", mapper);
     }
 
-    class GameMapper implements RowMapper<GameEntity> {
+    class GameMapper implements RowMapper<Game> {
         @Override
-        public GameEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return GameEntity.builder()
+        public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return Game.builder()
                     .id(rs.getLong("id"))
                     .title(rs.getString("title"))
                     .releaseDate(rs.getDate("release_date"))

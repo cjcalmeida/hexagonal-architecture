@@ -24,22 +24,19 @@
 package com.cjcalmeida.hexagonal.architecture.configuration;
 
 import com.cjcalmeida.hexagonal.architecture.Application;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
-import com.cjcalmeida.hexagonal.architecture.inbound.WsAdapter;
-import com.cjcalmeida.hexagonal.architecture.inbound.ws.GamePort;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
+import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.WsAdapter;
+import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.*;
 import com.revinate.ws.spring.SDDocumentCollector;
 import com.revinate.ws.spring.SpringService;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 import com.sun.xml.ws.transport.http.servlet.WSSpringServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.Resource;
 
 import javax.xml.namespace.QName;
 import java.net.URL;
@@ -63,7 +60,7 @@ public class WSAppConfiguration {
 
     @Bean
     @Autowired
-    public GamePort wsGameAdapter(IGameInboundPort port){
+    public GamePort wsGameAdapter(IGameUseCase port){
         return new WsAdapter(port);
     }
 

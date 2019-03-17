@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.jpa;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,13 +34,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "Game")
-@NamedQueries({
-        @NamedQuery(name = "Game.getByTitle", query = "SELECT e FROM JpaGameEntity e WHERE e.title = :title"),
-        @NamedQuery(name = "Game.getById", query = "SELECT e FROM JpaGameEntity e WHERE e.id = :id"),
-        @NamedQuery(name = "Game.findByTitleLike", query = "SELECT e FROM JpaGameEntity e WHERE e.title LIKE :title"),
-        @NamedQuery(name = "Game.listAll", query = "SELECT e FROM JpaGameEntity e")
-})
-public class JpaGameEntity implements Serializable {
+public class GameEntity implements Serializable {
 
     private static final long serialVersionUID = -7594639133296943338L;
 
@@ -49,7 +43,7 @@ public class JpaGameEntity implements Serializable {
     private Long id;
     @Column(length = 15, nullable = false, unique = true)
     private String title;
-    @Column(length = 255)
+    @Column
     private String description;
     @Temporal(TemporalType.DATE)
     private Date releaseDate;

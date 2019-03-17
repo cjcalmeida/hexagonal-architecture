@@ -23,18 +23,12 @@
 
 package com.cjcalmeida.hexagonal.architecture.infraestructure;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.InMemoryAdapter;
 import org.junit.*;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InMemoryAdapterTest {
@@ -43,7 +37,7 @@ public class InMemoryAdapterTest {
 
     @Test
     public void add() {
-        inMemory.add(GameEntity.builder()
+        inMemory.add(Game.builder()
                 .title("Title")
                 .description("Game Description")
                 .releaseDate(new Date())
@@ -75,7 +69,7 @@ public class InMemoryAdapterTest {
 
     @Test
     public void get() {
-        GameEntity game = inMemory.get(1L);
+        Game game = inMemory.get(1L);
         Assert.assertNotNull(game);
         Assert.assertNotNull(game.getId());
     }

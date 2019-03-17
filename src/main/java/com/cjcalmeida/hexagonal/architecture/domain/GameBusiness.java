@@ -23,6 +23,10 @@
 
 package com.cjcalmeida.hexagonal.architecture.domain;
 
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -34,25 +38,29 @@ import java.util.Date;
  * As this class is part of Domain Model, she is pure java class, with minimal frameworks dependencies
  */
 @Slf4j
-public final class GameBusiness implements IGameInboundPort {
+public final class GameBusiness implements IGameUseCase {
 
-    private final IGameOutboundPort repository;
+    private final IGameRepositoryPort repository;
 
-    public GameBusiness(IGameOutboundPort repository) {
+    public GameBusiness(IGameRepositoryPort repository) {
         this.repository = repository;
     }
 
     @Override
-    public final boolean create(GameEntity game) throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException {
+    public final boolean create(final Game game) throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException {
         if(repository.exists(game.getTitle())){
             log.error("Game already exists");
             throw new GameExceptions.GameAlreadyExistsException();
         }
         try {
             log.trace("Creating new game called '{}'", game.getTitle());
-            game.setId(null); //Forces create a new entity in Repository
-            game.setCreationDate(new Date());
-            repository.add(game);
+            repository.add(Game.builder()
+                    .title(game.getTitle())
+                    .description(game.getDescription())
+                    .releaseDate(game.getReleaseDate())
+                    .creationDate(new Date())
+                    .build()
+            );
             log.info("Game created");
             return true;
         }catch (Exception e) {
@@ -62,7 +70,7 @@ public final class GameBusiness implements IGameInboundPort {
     }
 
     @Override
-    public GameEntity get(Long id) throws GameExceptions.GameNotFoundException {
+    public Game get(Long id) throws GameExceptions.GameNotFoundException {
         if(!repository.exists(id)){
             log.error("Game with id {} not exists", id);
             throw new GameExceptions.GameNotFoundException();
@@ -72,8 +80,8 @@ public final class GameBusiness implements IGameInboundPort {
     }
 
     @Override
-    public Collection<GameEntity> listAll() throws GameExceptions.GameNotFoundException {
-        Collection<GameEntity> allGames = repository.listAll();
+    public Collection<Game> listAll() throws GameExceptions.GameNotFoundException {
+        Collection<Game> allGames = repository.listAll();
         log.debug("Found {} games", allGames.size());
 
         if(allGames.isEmpty()){
@@ -83,12 +91,12 @@ public final class GameBusiness implements IGameInboundPort {
     }
 
     @Override
-    public Collection<GameEntity> find(final String title) throws GameExceptions.GameNotFoundException {
+    public Collection<Game> find(final String title) throws GameExceptions.GameNotFoundException {
         if(title == null || title.isEmpty()){
             log.error("Title not informed");
             throw new GameExceptions.GameNotFoundException();
         }
-        final Collection<GameEntity> gamesFound = repository.findByTitleLike(title);
+        final Collection<Game> gamesFound = repository.findByTitleLike(title);
         if(gamesFound.isEmpty()){
             log.error("Games not found with title like '{}'", title);
             throw new GameExceptions.GameNotFoundException();

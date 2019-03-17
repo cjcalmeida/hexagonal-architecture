@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    active:
+      - web
+      - ws
+      - api
+      - jpa
   data:
     jpa:
       repositories:
@@ -6,7 +12,8 @@ spring:
     jdbc:
       repositories:
         enabled: false
-
+  thymeleaf:
+    enabled: false
   jpa:
     open-in-view: false
 ---
@@ -16,6 +23,9 @@ spring:
 ---
 spring:
   profiles: web
+  thymeleaf:
+    cache: true
+    enabled: true
 ---
 spring:
   profiles: ws
@@ -35,6 +45,10 @@ spring:
     jdbc:
       repositories:
         enabled: true
+  h2:
+    console:
+      path: /h2
+      enabled: true
 ---
 spring:
   profiles: jpa
@@ -49,3 +63,7 @@ spring:
         enabled: true
   jpa:
     show-sql: true
+  h2:
+    console:
+      path: /h2
+      enabled: true

@@ -21,43 +21,44 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.domain;
+package com.cjcalmeida.hexagonal.architecture.domain.model;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Date;
 
 
 /**
- * <b>Domain</b><br>
+ * <b>Domain </b><br>
  * Game Domain representation
+ * Imutable by default
  */
-@Data
+@Value
 @Builder
-public class GameEntity {
+public class Game {
 
     /**
      * Id of Game in System
      */
-    private Long id;
+    private final Long id;
     /**
      * Title of Game
      */
-    private String title;
+    private final String title;
     /**
      * Realease date
      */
-    private Date releaseDate;
+    private final Date releaseDate;
 
     /**
      * Description of Game
      */
-    private String description;
+    private final String description;
 
     /**
      * Creation Date in System
      */
-    private Date creationDate;
+    private final Date creationDate;
 
 }

@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.domain;
+package com.cjcalmeida.hexagonal.architecture.domain.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

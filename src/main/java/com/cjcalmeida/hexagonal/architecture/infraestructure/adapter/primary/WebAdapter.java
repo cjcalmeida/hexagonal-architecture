@@ -21,13 +21,14 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.inbound;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.domain.GameExceptions;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,12 +45,14 @@ import java.util.Map;
 
 @Profile("web")
 @Controller
+@Slf4j
 public class WebAdapter {
 
-    private IGameInboundPort business;
+    private IGameUseCase business;
     private final String TEMPLATE_NAME = "template";
 
-    public WebAdapter(IGameInboundPort business) {
+    public WebAdapter(IGameUseCase business) {
+        log.info("Initializing WEB Adapter");
         this.business = business;
     }
 
@@ -62,7 +65,7 @@ public class WebAdapter {
     public String home(@RequestParam(name = "q", required = false) String query, Model model){
         model.addAttribute("fragment", "fragments/list");
         try {
-            Collection<GameEntity> results;
+            Collection<Game> results;
             if (query != null) {
                 results = business.find(query);
                 model.addAttribute("query", query);
@@ -91,7 +94,7 @@ public class WebAdapter {
         }
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            business.create(GameEntity.builder()
+            business.create(Game.builder()
                     .title(game.get("title"))
                     .description(game.get("description"))
                     .releaseDate(format.parse(game.get("release")))
@@ -111,17 +114,18 @@ public class WebAdapter {
         view.setTitle(game.get("title"));
         view.setDescription(game.get("description"));
         view.setRelease(game.get("release"));
-        model.addAttribute("data", view);
 
+        model.addAttribute("data", view);
         model.addAttribute("view", false);
         model.addAttribute("fragment", "fragments/new");
+
         return TEMPLATE_NAME;
     }
 
     @GetMapping("/web/game/{id}")
     public String get(@PathVariable("id") Long id, Model model) {
         try {
-            GameEntity entity = business.get(id);
+            Game entity = business.get(id);
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             GameView view = new GameView();
             view.setRelease(format.format(entity.getReleaseDate()));
@@ -150,6 +154,5 @@ public class WebAdapter {
         private String description;
         private String release;
         private String creation;
-
     }
 }

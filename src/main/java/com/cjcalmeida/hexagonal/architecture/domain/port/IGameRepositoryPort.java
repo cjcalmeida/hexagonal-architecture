@@ -21,7 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.domain;
+package com.cjcalmeida.hexagonal.architecture.domain.port;
+
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 
 import java.util.Collection;
 
@@ -30,13 +32,13 @@ import java.util.Collection;
  * Infraestruture operations for Game Domain.<br><br>
  * This interface defines all operations that a Repository Adapter needs to implests.
  */
-public interface IGameOutboundPort {
+public interface IGameRepositoryPort {
 
     /**
      * Create a new Entity in repository
      * @param entity Entity to create
      */
-    void add(final GameEntity entity);
+    void add(final Game entity);
 
     /**
      * Verify if Game with title already exists
@@ -57,18 +59,18 @@ public interface IGameOutboundPort {
      * @param id Id of Game
      * @return All Game data
      */
-    GameEntity get(final Long id);
+    Game get(final Long id);
 
     /**
      * Search by Game title (like comparation)
      * @param title Title of Game
      * @return Collection of Games with all or part title informed
      */
-    Collection<GameEntity> findByTitleLike(final String title);
+    Collection<Game> findByTitleLike(final String title);
 
     /**
      * List all Games in System
      * @return Collection of Games saved in system
      */
-    Collection<GameEntity> listAll();
+    Collection<Game> listAll();
 }

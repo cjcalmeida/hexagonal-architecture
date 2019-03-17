@@ -23,6 +23,10 @@
 
 package com.cjcalmeida.hexagonal.architecture.domain;
 
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,9 +44,9 @@ import java.util.Date;
 public class GameBusinessTest {
 
     @Mock
-    private IGameOutboundPort infrastructure;
+    private IGameRepositoryPort infrastructure;
 
-    private IGameInboundPort business;
+    private IGameUseCase business;
 
     @Before
     public void setUp() throws Exception {
@@ -51,7 +55,7 @@ public class GameBusinessTest {
 
     @Test
     public void create_with_no_error() throws Exception {
-        GameEntity entity = GameEntity.builder()
+        Game entity = Game.builder()
                 .description("Real Football Game")
                 .releaseDate(new Date())
                 .title("Real Football")
@@ -64,7 +68,7 @@ public class GameBusinessTest {
         Mockito.when(infrastructure.exists(ArgumentMatchers.anyString()))
                 .thenReturn(true);
 
-        GameEntity entity = GameEntity.builder()
+        Game entity = Game.builder()
                 .description("Real Racing Game")
                 .releaseDate(new Date())
                 .title("Real Racing")
@@ -76,9 +80,9 @@ public class GameBusinessTest {
     @Test(expected = GameExceptions.GameNotCreatedException.class)
     public void game_not_created_with_runtime_exception() throws Exception {
         Mockito.doThrow(IllegalArgumentException.class)
-            .when(infrastructure).add(ArgumentMatchers.any(GameEntity.class));
+            .when(infrastructure).add(ArgumentMatchers.any(Game.class));
 
-        GameEntity entity = GameEntity.builder()
+        Game entity = Game.builder()
                 .description("Real Racing Game")
                 .releaseDate(new Date())
                 .title("Real Racing")
@@ -90,7 +94,7 @@ public class GameBusinessTest {
     @Test
     public void game_exists_on_get() throws Exception{
         Mockito.when(infrastructure.exists(ArgumentMatchers.anyLong())).thenReturn(true);
-        Mockito.when(infrastructure.get(ArgumentMatchers.anyLong())).thenReturn(GameEntity.builder()
+        Mockito.when(infrastructure.get(ArgumentMatchers.anyLong())).thenReturn(Game.builder()
                 .id(1L)
                 .creationDate(new Date())
                 .description("Game very cool")
@@ -116,7 +120,7 @@ public class GameBusinessTest {
     @Test
     public void games_foud_on_list_all() throws Exception {
         Mockito.when(infrastructure.listAll()).thenReturn(
-                Arrays.asList(GameEntity.builder()
+                Arrays.asList(Game.builder()
                         .id(1L)
                         .releaseDate(new Date())
                         .title("Game Title")
@@ -147,7 +151,7 @@ public class GameBusinessTest {
     @Test
     public void game_found_on_find() throws Exception {
         Mockito.when(infrastructure.findByTitleLike(ArgumentMatchers.anyString())).thenReturn(
-                Arrays.asList(GameEntity.builder()
+                Arrays.asList(Game.builder()
                         .id(1L)
                         .releaseDate(new Date())
                         .title("Game Title")

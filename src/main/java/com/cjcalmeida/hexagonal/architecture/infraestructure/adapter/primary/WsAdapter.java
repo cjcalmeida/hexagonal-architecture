@@ -21,12 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.inbound;
+package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary;
 
-import com.cjcalmeida.hexagonal.architecture.domain.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.domain.GameExceptions;
-import com.cjcalmeida.hexagonal.architecture.domain.IGameInboundPort;
-import com.cjcalmeida.hexagonal.architecture.inbound.ws.*;
+import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
+import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
+import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,15 +39,15 @@ import java.util.GregorianCalendar;
 import java.util.stream.Collectors;
 
 @Slf4j
-@WebService(endpointInterface = "com.cjcalmeida.hexagonal.architecture.inbound.ws.GamePort")
+@WebService(endpointInterface = "com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.GamePort")
 public class WsAdapter implements GamePort {
 
-    private IGameInboundPort business;
+    private IGameUseCase business;
     private static final String GAME_CREATED_RESPONSE = "CREATED";
     private final ObjectFactory wsFactory = new ObjectFactory();
 
     @Autowired
-    public WsAdapter(IGameInboundPort business) {
+    public WsAdapter(IGameUseCase business) {
         log.info("Initializing WS Adapter");
         this.business = business;
     }
@@ -56,7 +56,7 @@ public class WsAdapter implements GamePort {
     public String createGame(CreateGameRequest createGameRequest) throws GameFault_Exception {
         BasicGameInfo wsGame = createGameRequest.getGame();
         try {
-            business.create(GameEntity.builder()
+            business.create(Game.builder()
                     .title(wsGame.getTitle())
                     .description(wsGame.getDescription())
                     .releaseDate(toDate(wsGame.getReleaseDate()))
@@ -74,7 +74,7 @@ public class WsAdapter implements GamePort {
     public GetGameResponse getGame(GetGameRequest getGameRequest) throws GameFault_Exception {
         long id = getGameRequest.getId();
         try{
-            GameEntity entity = business.get(id);
+            Game entity = business.get(id);
             FullGameInfo gameWs = wsFactory.createFullGameInfo();
             gameWs.setId(entity.getId());
             gameWs.setTitle(entity.getTitle());
@@ -95,7 +95,7 @@ public class WsAdapter implements GamePort {
         try {
             response.getGame().addAll(
                     business.listAll().parallelStream()
-                            .map(this::fromEntity)
+                            .map(this::fromDomain)
                             .collect(Collectors.toList()));
             return response;
         }catch (GameExceptions.GameNotFoundException e) {
@@ -110,7 +110,7 @@ public class WsAdapter implements GamePort {
         try {
             response.getGame().addAll(
                     business.find(query).parallelStream()
-                            .map(this::fromEntity)
+                            .map(this::fromDomain)
                             .collect(Collectors.toList())
             );
         }catch (GameExceptions.GameNotFoundException e) {
@@ -119,7 +119,7 @@ public class WsAdapter implements GamePort {
         return response;
     }
 
-    private FullGameInfo fromEntity(GameEntity entity){
+    private FullGameInfo fromDomain(Game entity){
         FullGameInfo info = wsFactory.createFullGameInfo();
         info.setId(entity.getId());
         info.setTitle(entity.getTitle());
