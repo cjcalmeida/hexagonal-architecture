@@ -90,6 +90,7 @@
 				<executions>
 					<execution>
 						<id>generate-stub</id>
+						<phase>validate</phase>
 						<goals>
 							<goal>wsimport</goal>
 						</goals>

@@ -45,6 +45,7 @@ public class JpaAdapter implements IGameRepositoryPort {
     @Transactional(Transactional.TxType.REQUIRED)
     @Override
     public void add(Game entity) {
+        log.debug("Adding new Game {}", entity.getTitle());
         GameEntity jpaEntity = new GameEntity();
         jpaEntity.setCreationDate(entity.getCreationDate());
         jpaEntity.setDescription(entity.getDescription());
@@ -55,21 +56,25 @@ public class JpaAdapter implements IGameRepositoryPort {
 
     @Override
     public boolean exists(String title) {
+        log.debug("Checking if game exists with title {}", title);
         return repository.existsByTitle(title);
     }
 
     @Override
     public boolean exists(Long id) {
+        log.debug("Checking if game exists with id {}", id);
         return repository.existsById(id);
     }
 
     @Override
     public Game get(Long id) {
+        log.debug("Geting Game with id {}", id);
         return fromEntity(repository.getOne(id));
     }
 
     @Override
     public Collection<Game> findByTitleLike(String title) {
+        log.debug("Searching Game with title %{}%", title);
         return repository.findByTitleContaining(title)
                 .parallelStream()
                 .map(this::fromEntity)
@@ -78,8 +83,8 @@ public class JpaAdapter implements IGameRepositoryPort {
 
     @Override
     public Collection<Game> listAll() {
-        Collection<GameEntity> results = repository.findAll();
-        return results.parallelStream()
+        log.debug("Retrieve all games");
+        return repository.findAll().parallelStream()
                 .map(this::fromEntity)
                 .collect(Collectors.toList());
     }

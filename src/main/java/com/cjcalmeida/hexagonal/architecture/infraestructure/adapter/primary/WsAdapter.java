@@ -63,8 +63,10 @@ public class WsAdapter implements GamePort {
                     .build());
 
         }catch (GameExceptions.GameAlreadyExistsException e){
+            log.error("Business error in Game Creation", e);
             throw throwGameFault(e.getMessageKey(), null);
         }catch (GameExceptions.GameNotCreatedException e){
+            log.error("Business error in Game Creation", e);
             throw  throwGameFault(e.getMessageKey(), e.getMessage());
         }
         return GAME_CREATED_RESPONSE;
@@ -85,6 +87,7 @@ public class WsAdapter implements GamePort {
             response.setGame(gameWs);
             return response;
         }catch (GameExceptions.GameNotFoundException e){
+            log.error("Business error in Get Game by Id", e);
             throw throwGameFault(e.getMessageKey(), null);
         }
     }
@@ -99,6 +102,7 @@ public class WsAdapter implements GamePort {
                             .collect(Collectors.toList()));
             return response;
         }catch (GameExceptions.GameNotFoundException e) {
+            log.error("Business error in Game Listing", e);
             throw throwGameFault(e.getMessageKey(), null);
         }
     }
@@ -114,6 +118,7 @@ public class WsAdapter implements GamePort {
                             .collect(Collectors.toList())
             );
         }catch (GameExceptions.GameNotFoundException e) {
+            log.error("Business error in Game Searching", e);
             throw  throwGameFault(e.getMessageKey(), null);
         }
         return response;

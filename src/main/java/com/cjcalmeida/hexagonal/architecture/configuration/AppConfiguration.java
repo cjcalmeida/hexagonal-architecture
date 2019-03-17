@@ -70,7 +70,6 @@ public class AppConfiguration {
     @Autowired
     public IGameUseCase businessBean(IGameRepositoryPort infraestructure){
         log.info("Initializing Business");
-        log.info("Business using {} as Secondary Port (Repository)", infraestructure.getClass().getSimpleName());
         return new GameBusiness(infraestructure);
     }
 

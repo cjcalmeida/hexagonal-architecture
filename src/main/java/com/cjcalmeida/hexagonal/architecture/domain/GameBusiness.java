@@ -48,12 +48,13 @@ public final class GameBusiness implements IGameUseCase {
 
     @Override
     public final boolean create(final Game game) throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException {
+        log.info("Init Game creation");
         if(repository.exists(game.getTitle())){
             log.error("Game already exists");
             throw new GameExceptions.GameAlreadyExistsException();
         }
         try {
-            log.trace("Creating new game called '{}'", game.getTitle());
+            log.debug("Creating new game called '{}'", game.getTitle());
             repository.add(Game.builder()
                     .title(game.getTitle())
                     .description(game.getDescription())
@@ -71,18 +72,20 @@ public final class GameBusiness implements IGameUseCase {
 
     @Override
     public Game get(Long id) throws GameExceptions.GameNotFoundException {
+        log.info("Init Game Get");
         if(!repository.exists(id)){
             log.error("Game with id {} not exists", id);
             throw new GameExceptions.GameNotFoundException();
         }
-        log.debug("Game with id {} found", id);
+        log.info("Game with id {} found", id);
         return repository.get(id);
     }
 
     @Override
     public Collection<Game> listAll() throws GameExceptions.GameNotFoundException {
+        log.info("Init Listing Games");
         Collection<Game> allGames = repository.listAll();
-        log.debug("Found {} games", allGames.size());
+        log.info("Found {} games", allGames.size());
 
         if(allGames.isEmpty()){
             throw new GameExceptions.GameNotFoundException();
@@ -92,6 +95,7 @@ public final class GameBusiness implements IGameUseCase {
 
     @Override
     public Collection<Game> find(final String title) throws GameExceptions.GameNotFoundException {
+        log.info("Init Finding Game");
         if(title == null || title.isEmpty()){
             log.error("Title not informed");
             throw new GameExceptions.GameNotFoundException();

@@ -113,6 +113,7 @@ public class RestAdapter {
     @ExceptionHandler({GameExceptions.GameAlreadyExistsException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(
             GameExceptions.GameAlreadyExistsException e){
+        log.error("Business error in Game Creation", e);
         return new ResponseEntity<>(new GameExceptionRepresentation(e.getMessageKey(), e.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
@@ -120,12 +121,14 @@ public class RestAdapter {
     @ExceptionHandler({GameExceptions.GameNotCreatedException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(
             GameExceptions.GameNotCreatedException e){
+        log.error("Business error in Game Creation", e);
         return new ResponseEntity<>(new GameExceptionRepresentation(e.getMessageKey(), e.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({GameExceptions.GameNotFoundException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(GameExceptions.GameException e){
+        log.error("Business error in Game Searching/Listing", e);
         return new ResponseEntity<>(new GameExceptionRepresentation(e.getMessageKey(), e.getMessage()),
                 HttpStatus.NOT_FOUND);
     }

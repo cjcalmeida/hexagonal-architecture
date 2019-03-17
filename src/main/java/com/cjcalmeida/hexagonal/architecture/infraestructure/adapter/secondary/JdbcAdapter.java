@@ -25,6 +25,7 @@ package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
 
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -37,6 +38,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class JdbcAdapter implements IGameRepositoryPort {
 
     private NamedParameterJdbcTemplate jdbc;
@@ -50,6 +52,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public void add(Game entity) {
+        log.debug("Adding new Game {}", entity.getTitle());
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("title", entity.getTitle());
         params.addValue("description", entity.getDescription());
@@ -63,6 +66,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public boolean exists(String title) {
+        log.debug("Checking if game exists with title {}", title);
         Map<String, Object> params = new HashMap<>();
         params.put("title", title);
         return !jdbc.query("SELECT * FROM Game WHERE title = :title", params, mapper).isEmpty();
@@ -70,6 +74,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public boolean exists(Long id) {
+        log.debug("Checking if game exists with id {}", id);
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return !jdbc.query("SELECT * FROM Game WHERE id = :id", params, mapper).isEmpty();
@@ -77,6 +82,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public Game get(Long id) {
+        log.debug("Geting Game with id {}", id);
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
         return jdbc.query("SELECT * FROM Game WHERE id = :id", params, mapper).get(0);
@@ -84,6 +90,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public Collection<Game> findByTitleLike(String title) {
+        log.debug("Searching Game with title %{}%", title);
         Map<String, Object> params = new HashMap<>();
         params.put("title", "%"+title+"%");
         return jdbc.query("SELECT * FROM Game WHERE title LIKE :title", params, mapper);
@@ -91,6 +98,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Override
     public Collection<Game> listAll() {
+        log.debug("Retrieve all games");
         return jdbc.query("SELECT * FROM Game", mapper);
     }
 

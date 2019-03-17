@@ -31,6 +31,7 @@ import com.revinate.ws.spring.SDDocumentCollector;
 import com.revinate.ws.spring.SpringService;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 import com.sun.xml.ws.transport.http.servlet.WSSpringServlet;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

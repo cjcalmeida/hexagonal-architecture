@@ -74,6 +74,7 @@ public class WebAdapter {
             }
             model.addAttribute("games", results);
         }catch (GameExceptions.GameNotFoundException e){
+            log.error("Business error in Game Listing / Searching", e);
             model.addAttribute("error", e.getMessageKey());
         }
         return TEMPLATE_NAME;
@@ -101,10 +102,13 @@ public class WebAdapter {
             .build());
             return redirect();
         }catch (ParseException e){
+            log.error("Parsing Exception", e);
             model.addAttribute("error","game.data.format.invalid");
         }catch (GameExceptions.GameAlreadyExistsException e){
+            log.error("Business error in Game Creation", e);
             model.addAttribute("error", e.getMessageKey());
         }catch (GameExceptions.GameNotCreatedException e){
+            log.error("Runtime error in Game Creation", e);
             model.addAttribute("error", e.getMessageKey());
             model.addAttribute("errorDetail", e.getMessage());
         }
@@ -139,7 +143,7 @@ public class WebAdapter {
             model.addAttribute("view", true);
             model.addAttribute("data", view);
         }catch (GameExceptions.GameNotFoundException e){
-
+            log.error("Business error in Game Retrieving", e);
             model.addAttribute("error", e.getMessageKey());
             model.addAttribute("fragment", "fragments/list");
         }
