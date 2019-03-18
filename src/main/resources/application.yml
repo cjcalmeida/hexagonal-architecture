@@ -1,10 +1,4 @@
 spring:
-  profiles:
-    active:
-      - web
-      - ws
-      - api
-      - jdbc
   data:
     jpa:
       repositories:
