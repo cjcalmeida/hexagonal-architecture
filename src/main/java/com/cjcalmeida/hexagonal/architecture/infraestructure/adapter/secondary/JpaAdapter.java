@@ -28,6 +28,8 @@ import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.GameEntity;
 import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.IGameRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -38,11 +40,14 @@ import java.util.stream.Collectors;
  * Adapter to handle Repository Port as JPA Implementation
  */
 @Slf4j
+@Profile("jpa")
+@Repository
 public class JpaAdapter implements IGameRepositoryPort {
 
     private IGameRepository repository;
 
     public JpaAdapter(IGameRepository repository) {
+        log.info("Initializing JPA Adapter");
         this.repository = repository;
     }
 
@@ -70,10 +75,12 @@ public class JpaAdapter implements IGameRepositoryPort {
         return repository.existsById(id);
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
     @Override
     public Game get(Long id) {
         log.debug("Geting Game with id {}", id);
-        return fromEntity(repository.getOne(id));
+        GameEntity entity = repository.getOne(id);
+        return fromEntity(entity);
     }
 
     @Override

@@ -28,8 +28,6 @@ import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.InMemoryAdapter;
 import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.JdbcAdapter;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.JpaAdapter;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.IGameRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -38,41 +36,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.persistence.PersistenceContext;
-
 /**
  * All Global Configuration
  */
 @Slf4j
 @Configuration
 public class AppConfiguration {
-
-    /**
-     * Defines bean of the JPA Adapter <br>
-     * Execute only in Profile "jpa"
-     * @param repository
-     * @return
-     */
-    @Bean
-    @Profile("jpa")
-    @PersistenceContext
-    public IGameRepositoryPort jpaAdapterBean(IGameRepository repository){
-        log.info("Initializing JPA Adapter");
-        return new JpaAdapter(repository);
-    }
-
-    /**
-     * Defines Bean of the JDBC Adapter <br>
-     * Execute only in Profile "jdbc"
-     * @param jdbcTemplate
-     * @return
-     */
-    @Bean
-    @Profile("jdbc")
-    public IGameRepositoryPort jdbcAdapterBean(NamedParameterJdbcTemplate jdbcTemplate){
-        log.info("Initializing JDBC Adapter");
-        return new JdbcAdapter(jdbcTemplate);
-    }
 
     /**
      * InMemory Repository Adapter Bean

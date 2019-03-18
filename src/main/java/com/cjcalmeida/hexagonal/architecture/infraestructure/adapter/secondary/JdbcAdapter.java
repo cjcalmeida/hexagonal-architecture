@@ -27,10 +27,13 @@ import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -43,6 +46,8 @@ import java.util.Map;
  * Adapter to handle Repository Port as JDBC Implementation
  */
 @Slf4j
+@Profile("jdbc")
+@Repository
 public class JdbcAdapter implements IGameRepositoryPort {
 
     private NamedParameterJdbcTemplate jdbc;
@@ -50,10 +55,12 @@ public class JdbcAdapter implements IGameRepositoryPort {
 
     @Autowired
     public JdbcAdapter(NamedParameterJdbcTemplate jdbc) {
+        log.info("Initializing JDBC Adapter");
         this.jdbc = jdbc;
         mapper = new GameMapper();
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
     @Override
     public void add(Game entity) {
         log.debug("Adding new Game {}", entity.getTitle());
@@ -64,7 +71,7 @@ public class JdbcAdapter implements IGameRepositoryPort {
         params.addValue("creationDate", entity.getCreationDate(), Types.TIMESTAMP);
 
         jdbc.update("INSERT INTO Game(title, description, release_date, creation_date) " +
-                "VALUES(:title, :description, :releaseDate, :creationDate)",
+                        "VALUES(:title, :description, :releaseDate, :creationDate)",
                 params);
     }
 

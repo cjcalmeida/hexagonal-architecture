@@ -4,7 +4,7 @@ spring:
       - web
       - ws
       - api
-      - jpa
+      - jdbc
   data:
     jpa:
       repositories:
