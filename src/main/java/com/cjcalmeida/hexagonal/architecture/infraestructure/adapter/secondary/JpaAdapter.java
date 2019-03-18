@@ -33,6 +33,10 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * <strong>Secondary Adapter</strong><br>
+ * Adapter to handle Repository Port as JPA Implementation
+ */
 @Slf4j
 public class JpaAdapter implements IGameRepositoryPort {
 
@@ -89,6 +93,11 @@ public class JpaAdapter implements IGameRepositoryPort {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convert {@link GameEntity} to Model {@link Game}
+     * @param entity
+     * @return
+     */
     private Game fromEntity(GameEntity entity){
         return Game.builder()
                 .id(entity.getId())

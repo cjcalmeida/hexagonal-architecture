@@ -26,12 +26,11 @@ package com.cjcalmeida.hexagonal.architecture.configuration;
 import com.cjcalmeida.hexagonal.architecture.Application;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.WsAdapter;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.*;
+import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.GamePort;
 import com.revinate.ws.spring.SDDocumentCollector;
 import com.revinate.ws.spring.SpringService;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 import com.sun.xml.ws.transport.http.servlet.WSSpringServlet;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -44,6 +43,10 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Configurations to WS adapter
+ * Only in 'ws' profile
+ */
 @Profile("ws")
 @Configuration
 @AutoConfigureAfter(AppConfiguration.class)
@@ -59,17 +62,32 @@ public class WSAppConfiguration {
         GAME_SERVICE_PRIMARY_WSDL = docs.get(cl.getResource("wsdl/game.wsdl"));
     }
 
+    /**
+     * Bean that handle all requests for {@link GamePort}
+     * @param port
+     * @return
+     */
     @Bean
     @Autowired
     public GamePort wsGameAdapter(IGameUseCase port){
         return new WsAdapter(port);
     }
 
+    /**
+     * Defines Servlet to handle /ws/* endpoint
+     * @return
+     */
     @Bean
     public ServletRegistrationBean wsSpringServlet(){
         return new ServletRegistrationBean(new WSSpringServlet(), "/ws/*");
     }
 
+    /**
+     * Create a {@link SpringService} to expose game.wsdl service
+     * @param port
+     * @return
+     * @throws Exception
+     */
     @Bean
     @Autowired
     public SpringService gameService(GamePort port) throws Exception{
@@ -82,6 +100,12 @@ public class WSAppConfiguration {
         return service;
     }
 
+    /**
+     * Defines a bean to Binding /ws/Game endpoint
+     * @param gameService
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SpringBinding gameBinding(SpringService gameService) throws Exception{
         SpringBinding binding = new SpringBinding();

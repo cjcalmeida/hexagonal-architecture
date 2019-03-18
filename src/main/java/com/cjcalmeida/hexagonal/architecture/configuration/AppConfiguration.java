@@ -40,10 +40,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.persistence.PersistenceContext;
 
+/**
+ * All Global Configuration
+ */
 @Slf4j
 @Configuration
 public class AppConfiguration {
 
+    /**
+     * Defines bean of the JPA Adapter <br>
+     * Execute only in Profile "jpa"
+     * @param repository
+     * @return
+     */
     @Bean
     @Profile("jpa")
     @PersistenceContext
@@ -52,6 +61,12 @@ public class AppConfiguration {
         return new JpaAdapter(repository);
     }
 
+    /**
+     * Defines Bean of the JDBC Adapter <br>
+     * Execute only in Profile "jdbc"
+     * @param jdbcTemplate
+     * @return
+     */
     @Bean
     @Profile("jdbc")
     public IGameRepositoryPort jdbcAdapterBean(NamedParameterJdbcTemplate jdbcTemplate){
@@ -59,6 +74,11 @@ public class AppConfiguration {
         return new JdbcAdapter(jdbcTemplate);
     }
 
+    /**
+     * InMemory Repository Adapter Bean
+     * Execute when no Bean of type {@link IGameRepositoryPort} is found
+     * @return
+     */
     @Bean
     @ConditionalOnMissingBean(IGameRepositoryPort.class)
     public IGameRepositoryPort inmemoryBean(){
@@ -66,6 +86,11 @@ public class AppConfiguration {
         return new InMemoryAdapter();
     }
 
+    /**
+     * Defines bean of Application Business
+     * @param infraestructure
+     * @return
+     */
     @Bean
     @Autowired
     public IGameUseCase businessBean(IGameRepositoryPort infraestructure){

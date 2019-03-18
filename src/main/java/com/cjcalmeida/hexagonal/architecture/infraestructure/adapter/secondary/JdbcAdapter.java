@@ -38,6 +38,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <strong>Secondary Adapter</strong><br>
+ * Adapter to handle Repository Port as JDBC Implementation
+ */
 @Slf4j
 public class JdbcAdapter implements IGameRepositoryPort {
 
@@ -102,6 +106,9 @@ public class JdbcAdapter implements IGameRepositoryPort {
         return jdbc.query("SELECT * FROM Game", mapper);
     }
 
+    /**
+     * Game Row Mapper to Map database collums to Game Domain Model
+     */
     class GameMapper implements RowMapper<Game> {
         @Override
         public Game mapRow(ResultSet rs, int rowNum) throws SQLException {

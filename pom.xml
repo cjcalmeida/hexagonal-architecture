@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.cjcalmeida.architecture</groupId>
 	<artifactId>hexagonal-architecture</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>hexagonal-architecture</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Hexagonal Architecture Sample</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -107,7 +107,38 @@
 					</vmArgs>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<author>true</author>
+					<stylesheet>maven</stylesheet>
+					<defaultAuthor>Cristiano Almeida (https://github.com/cjcalmeida)</defaultAuthor>
+					<failOnError>false</failOnError>
+					<failOnWarnings>false</failOnWarnings>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

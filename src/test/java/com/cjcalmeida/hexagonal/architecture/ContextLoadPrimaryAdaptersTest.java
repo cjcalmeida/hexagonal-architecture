@@ -21,36 +21,22 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa;
+package com.cjcalmeida.hexagonal.architecture;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles(profiles = {"ws", "api", "web"})
+public class ContextLoadPrimaryAdaptersTest {
 
-/**
- * Entity representation of Game Domain Model
- */
-@Data
-@NoArgsConstructor
-@Entity
-@Table(name = "Game")
-public class GameEntity implements Serializable {
-
-    private static final long serialVersionUID = -7594639133296943338L;
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
-    @Column(length = 15, nullable = false, unique = true)
-    private String title;
-    @Column
-    private String description;
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
-
+	@Test
+	public void contextLoads() {
+	}
 }

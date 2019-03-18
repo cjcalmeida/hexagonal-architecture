@@ -35,10 +35,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+/**
+ * Configurations of "web" profile
+ */
 @Profile("web")
 @Configuration
 public class WebAppConfiguration implements WebMvcConfigurer {
 
+    /**
+     * Defines where static content resides and what URI to download static content
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
@@ -46,6 +53,10 @@ public class WebAppConfiguration implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/");
     }
 
+    /**
+     * Defines location of messages for i18n
+     * @return
+     */
     @Bean
     public MessageSource messageSource(){
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -54,11 +65,19 @@ public class WebAppConfiguration implements WebMvcConfigurer {
         return messageSource;
     }
 
+    /**
+     * Defines what LocaleResolver is used
+     * @return
+     */
     @Bean
     public LocaleResolver localeResolver() {
         return new CookieLocaleResolver();
     }
 
+    /**
+     * Defines how to change language of application
+     * @return
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -66,6 +85,10 @@ public class WebAppConfiguration implements WebMvcConfigurer {
         return lci;
     }
 
+    /**
+     * Add interceptor to change language of site
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());

@@ -38,6 +38,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.stream.Collectors;
 
+/**
+ * <strong>Primary Adapter</strong><br>
+ * Adapter to expose business logic as SOAP Service
+ */
 @Slf4j
 @WebService(endpointInterface = "com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.GamePort")
 public class WsAdapter implements GamePort {
@@ -52,10 +56,19 @@ public class WsAdapter implements GamePort {
         this.business = business;
     }
 
+    /**
+     * Expose "Create Game" service
+     * @param createGameRequest
+     * @return
+     * @throws GameFault_Exception
+     */
     @Override
     public String createGame(CreateGameRequest createGameRequest) throws GameFault_Exception {
         BasicGameInfo wsGame = createGameRequest.getGame();
         try {
+            if(wsGame == null){
+                throw  new GameExceptions.GameNotCreatedException("Payload is required");
+            }
             business.create(Game.builder()
                     .title(wsGame.getTitle())
                     .description(wsGame.getDescription())
@@ -72,6 +85,12 @@ public class WsAdapter implements GamePort {
         return GAME_CREATED_RESPONSE;
     }
 
+    /**
+     * Expose "Get Game" service
+     * @param getGameRequest
+     * @return
+     * @throws GameFault_Exception
+     */
     @Override
     public GetGameResponse getGame(GetGameRequest getGameRequest) throws GameFault_Exception {
         long id = getGameRequest.getId();
@@ -92,6 +111,12 @@ public class WsAdapter implements GamePort {
         }
     }
 
+    /**
+     * Expose "List All Games" service
+     * @param listGameRequest
+     * @return
+     * @throws GameFault_Exception
+     */
     @Override
     public ListGameResponse listGame(Object listGameRequest) throws GameFault_Exception {
         ListGameResponse response = wsFactory.createListGameResponse();
@@ -107,6 +132,12 @@ public class WsAdapter implements GamePort {
         }
     }
 
+    /**
+     * Expose "Search Game" service
+     * @param searchGameRequest
+     * @return
+     * @throws GameFault_Exception
+     */
     @Override
     public SearchGameResponse searchGame(SearchGameRequest searchGameRequest) throws GameFault_Exception {
         String query = searchGameRequest.getSearch();
@@ -124,6 +155,11 @@ public class WsAdapter implements GamePort {
         return response;
     }
 
+    /**
+     * Convert Game Domain Model to SOAP Model {@link FullGameInfo}
+     * @param entity
+     * @return
+     */
     private FullGameInfo fromDomain(Game entity){
         FullGameInfo info = wsFactory.createFullGameInfo();
         info.setId(entity.getId());
@@ -134,10 +170,20 @@ public class WsAdapter implements GamePort {
         return info;
     }
 
+    /**
+     * Convert SOAP Date format ({@link XMLGregorianCalendar}) to {@link Date}
+     * @param date
+     * @return
+     */
     private Date toDate(XMLGregorianCalendar date){
         return date.toGregorianCalendar().getTime();
     }
 
+    /**
+     * Convert {@link Date} to SOAP Date format ({@link XMLGregorianCalendar})
+     * @param date
+     * @return
+     */
     private XMLGregorianCalendar toDate(Date date) {
         try {
             GregorianCalendar calendar = new GregorianCalendar();
@@ -150,6 +196,12 @@ public class WsAdapter implements GamePort {
         }
     }
 
+    /**
+     * Create a Fault Message of Game SOAP Service
+     * @param messageKey
+     * @param cause
+     * @return
+     */
     private GameFault_Exception throwGameFault(String messageKey, String cause){
         GameFault gameFault = wsFactory.createGameFault();
         gameFault.setMessageKey(messageKey);

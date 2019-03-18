@@ -33,8 +33,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link IGameRepositoryPort} <br>
- * Implements in Memory Adapter strategy
+ * <strong>Secondary Adapter</strong><br>
+ * Adapter to handle Repository Port as InMemory Implementation
  */
 @Slf4j
 public class InMemoryAdapter implements IGameRepositoryPort {

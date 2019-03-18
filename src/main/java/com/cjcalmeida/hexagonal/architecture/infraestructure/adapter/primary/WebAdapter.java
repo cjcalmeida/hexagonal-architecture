@@ -43,6 +43,10 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * <strong>Primary Adapter</strong><br>
+ * Adapter to expose Business Logic as WEB Site.
+ */
 @Profile("web")
 @Controller
 @Slf4j
@@ -56,11 +60,22 @@ public class WebAdapter {
         this.business = business;
     }
 
+    /**
+     * Redirect the root endpoint / to Home page /web/game
+     * @return
+     */
     @GetMapping("/")
     public String redirect(){
         return "redirect:/web/game";
     }
 
+    /**
+     * Initialize all presentations data for Home page<br>
+     * In this phase listAll or search use case is executed
+     * @param query
+     * @param model
+     * @return
+     */
     @GetMapping("/web/game")
     public String home(@RequestParam(name = "q", required = false) String query, Model model){
         model.addAttribute("fragment", "fragments/list");
@@ -80,6 +95,11 @@ public class WebAdapter {
         return TEMPLATE_NAME;
     }
 
+    /**
+     * Initialize all presentation data to Create Game Form
+     * @param model
+     * @return
+     */
     @GetMapping("/web/game/new")
     public String initNewGame(Model model) {
         model.addAttribute("fragment", "fragments/new");
@@ -88,6 +108,12 @@ public class WebAdapter {
         return TEMPLATE_NAME;
     }
 
+    /**
+     * Action to create New Game (form submit handle)
+     * @param game
+     * @param model
+     * @return
+     */
     @PostMapping("/web/game/new")
     public String create(@RequestParam Map<String, String> game, Model model) {
         if(game == null || game.isEmpty()){
@@ -126,6 +152,12 @@ public class WebAdapter {
         return TEMPLATE_NAME;
     }
 
+    /**
+     * Retrieve Game by Id
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/web/game/{id}")
     public String get(@PathVariable("id") Long id, Model model) {
         try {
@@ -150,6 +182,9 @@ public class WebAdapter {
         return TEMPLATE_NAME;
     }
 
+    /**
+     * Game View to Web Pages
+     */
     @Data
     @NoArgsConstructor
     public static class GameView {

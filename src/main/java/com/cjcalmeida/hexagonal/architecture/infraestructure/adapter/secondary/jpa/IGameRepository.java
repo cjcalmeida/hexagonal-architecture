@@ -29,10 +29,24 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+/**
+ * JPA Crud Repository
+ */
 @Profile("jpa")
 @Repository
 public interface IGameRepository extends JpaRepository<GameEntity, Long> {
 
+    /**
+     * Query to check if Game with a Title exists
+     * @param title
+     * @return
+     */
     boolean existsByTitle(String title);
+
+    /**
+     * Query to find all Games with title like
+     * @param title
+     * @return
+     */
     Collection<GameEntity> findByTitleContaining(String title);
 }

@@ -41,6 +41,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ * <strong>Primary Adapter</strong><br>
+ * Adapter to expose business logic as Rest Api Service
+ */
 @Profile("api")
 @RestController
 @RequestMapping("/api/game")
@@ -55,6 +59,13 @@ public class RestAdapter {
         this.service = service;
     }
 
+    /**
+     * Operation to Create a new Game
+     * @param game
+     * @return
+     * @throws GameExceptions.GameAlreadyExistsException
+     * @throws GameExceptions.GameNotCreatedException
+     */
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody GameRepresentation game)
             throws GameExceptions.GameAlreadyExistsException, GameExceptions.GameNotCreatedException{
@@ -68,6 +79,12 @@ public class RestAdapter {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * Operation to retrieve Game by Id
+     * @param id
+     * @return
+     * @throws GameExceptions.GameNotFoundException
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") Long id) throws GameExceptions.GameNotFoundException {
         Game game = service.get(id);
@@ -80,6 +97,12 @@ public class RestAdapter {
         return new ResponseEntity<>(representation, HttpStatus.FOUND);
     }
 
+    /**
+     * Operation to search Game by Title
+     * @param title
+     * @return
+     * @throws GameExceptions.GameNotFoundException
+     */
     @GetMapping
     public ResponseEntity<?> find(@RequestParam(required = false, name = "q") String title)
             throws GameExceptions.GameNotFoundException{
@@ -110,6 +133,12 @@ public class RestAdapter {
         Exception Handlers
      */
 
+    /**
+     * Handle all {@link com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions.GameAlreadyExistsException}
+     * exceptions
+     * @param e
+     * @return
+     */
     @ExceptionHandler({GameExceptions.GameAlreadyExistsException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(
             GameExceptions.GameAlreadyExistsException e){
@@ -118,6 +147,12 @@ public class RestAdapter {
                 HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handle all {@link com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions.GameNotCreatedException}
+     * exceptions
+     * @param e
+     * @return
+     */
     @ExceptionHandler({GameExceptions.GameNotCreatedException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(
             GameExceptions.GameNotCreatedException e){
@@ -126,6 +161,12 @@ public class RestAdapter {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Handle all {@link com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions.GameNotFoundException}
+     * exceptions
+     * @param e
+     * @return
+     */
     @ExceptionHandler({GameExceptions.GameNotFoundException.class})
     public ResponseEntity<GameExceptionRepresentation> handleDomainException(GameExceptions.GameException e){
         log.error("Business error in Game Searching/Listing", e);
@@ -137,6 +178,9 @@ public class RestAdapter {
        Api Representations
      */
 
+    /**
+     * API View of Game Domain (basic fields only)
+     */
     @Data
     @NoArgsConstructor
     public static class GameRepresentation {
@@ -145,6 +189,9 @@ public class RestAdapter {
         private Date releaseDate;
     }
 
+    /**
+     * Api View of Game Domain (full fields)
+     */
     @Data
     @NoArgsConstructor
     public static class FullGameRepresentation extends GameRepresentation{
@@ -152,6 +199,9 @@ public class RestAdapter {
         private Date creationDate;
     }
 
+    /**
+     * Api View of Game Business Exceptions
+     */
     @Getter
     @AllArgsConstructor
     public static class GameExceptionRepresentation {
