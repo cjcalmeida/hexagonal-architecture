@@ -21,8 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary;
+package com.cjcalmeida.hexagonal.architecture.adapters.primary;
 
+import com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.*;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
@@ -43,7 +44,7 @@ import java.util.stream.Collectors;
  * Adapter to expose business logic as SOAP Service
  */
 @Slf4j
-@WebService(endpointInterface = "com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.GamePort")
+@WebService(endpointInterface = "GamePort")
 public class WsAdapter implements GamePort {
 
     private IGameUseCase business;

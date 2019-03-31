@@ -21,8 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary;
+package com.cjcalmeida.hexagonal.architecture.adapters.primary;
 
+import com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.*;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;

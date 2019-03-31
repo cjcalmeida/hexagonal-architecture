@@ -21,11 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
+package com.cjcalmeida.hexagonal.architecture.adapters.secondary;
 
+import com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa.GameEntity;
+import com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa.IGameRepository;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.IGameRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa;
+package com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

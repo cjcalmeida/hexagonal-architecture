@@ -10,8 +10,40 @@ The main goal of this repository, is show in easy way how organize your
 application to use this Architectural Pattern while use Spring Boot 
 Framework. 
 
-To see in details the architectures choices and classes organization 
-go to [Wiki Page](https://github.com/cjcalmeida/hexagonal-architecture/wiki).   
+## Architecture Overview
+
+````
+       +------------------------------+
+       |  +------+  +-----+  +----+   |
+       |  | Rest |  | WEB |  | WS |   |   Primary Adapters
+       |  +------+  +-----+  +----+   |
+       +------|--------|--------|-----+
+              V        V        V
+       +------------------------------+
+       |  +------------------------+  |
+       |  |         UseCase        |  |
+       |  +----|--------------|----+  |
+       |       V              V       |
+       |  +----------+   +---------+  |
+       |  | Business | > |  Model  |  |    Domain
+       |  +----|-----+   +---------+  |
+       |       V                      |
+       |  +------------------------+  |
+       |  |     RepositoryPort     |  |
+       |  +------------------------+  |
+       +---------------|--------------+
+                       V              
+    +-----------------------------------+
+    |  +----------+  +------+  +-----+  | 
+    |  | InMemory |  | JDBC |  | JPA |  | Secondary Adapters
+    |  +----------+  +------+  +-----+  |
+    +-----------------------------------+
+     
+````
+
+**Obs 1**: *Configuration Package only exists to Spring Configuration (Bean Creation, Web Config and WS Config)*
+**Obs 2**: *JPA Package only contains classes to detach JPA Entity (Table) from Domain Model (Core Business)
+ and to use Spring Data JPA features (JpaRepositories)* 
 
 ## How to use 
 This project has many Spring profiles that active some adapters, 
@@ -49,6 +81,8 @@ mvn clean package
 ````sh
 java -jar target/hexagonal-architecture-0.0.2.jar --spring.profiles.active=web,api,ws,jpa
 ````
+
+*You can use any profile as described in the How to Use section*
 
 ### Entry Points
 Each profile enable a entry point to interact with application, 

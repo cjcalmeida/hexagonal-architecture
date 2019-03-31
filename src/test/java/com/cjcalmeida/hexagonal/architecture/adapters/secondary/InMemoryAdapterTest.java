@@ -21,10 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
+package com.cjcalmeida.hexagonal.architecture.adapters.secondary;
 
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.InMemoryAdapter;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 

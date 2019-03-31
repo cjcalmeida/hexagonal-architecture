@@ -25,8 +25,8 @@ package com.cjcalmeida.hexagonal.architecture.configuration;
 
 import com.cjcalmeida.hexagonal.architecture.Application;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.WsAdapter;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.GamePort;
+import com.cjcalmeida.hexagonal.architecture.adapters.primary.WsAdapter;
+import com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.GamePort;
 import com.revinate.ws.spring.SDDocumentCollector;
 import com.revinate.ws.spring.SpringService;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;

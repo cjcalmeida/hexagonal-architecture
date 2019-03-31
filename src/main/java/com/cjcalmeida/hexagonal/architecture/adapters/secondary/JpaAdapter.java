@@ -21,12 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary;
+package com.cjcalmeida.hexagonal.architecture.adapters.secondary;
 
+import com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa.GameEntity;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.GameEntity;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.secondary.jpa.IGameRepository;
+import com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa.IGameRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
