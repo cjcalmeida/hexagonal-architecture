@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cjcalmeida.architecture</groupId>
 	<artifactId>hexagonal-architecture</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>hexagonal-architecture</name>
 	<description>Hexagonal Architecture Sample</description>
 
@@ -99,7 +99,7 @@
 				<configuration>
 					<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
 					<sourceDestDir>target/generated-sources/wsimport</sourceDestDir>
-					<packageName>com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws</packageName>
+					<packageName>com.cjcalmeida.hexagonal.architecture.adapters.primary.ws</packageName>
 					<keep>true</keep>
 					<verbose>true</verbose>
 					<vmArgs>
@@ -135,6 +135,25 @@
 						<id>attach-sources</id>
 						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+                        <phase>test</phase>
+                        <goals>
+							<goal>report</goal>
 						</goals>
 					</execution>
 				</executions>

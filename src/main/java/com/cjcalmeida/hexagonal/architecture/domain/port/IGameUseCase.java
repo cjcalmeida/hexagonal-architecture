@@ -23,8 +23,8 @@
 
 package com.cjcalmeida.hexagonal.architecture.domain.port;
 
-import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
+import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 
 import java.util.Collection;
 

@@ -23,12 +23,11 @@
 
 package com.cjcalmeida.hexagonal.architecture.configuration;
 
+import com.cjcalmeida.hexagonal.architecture.adapters.secondary.InMemoryAdapter;
 import com.cjcalmeida.hexagonal.architecture.domain.GameBusiness;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
-import com.cjcalmeida.hexagonal.architecture.adapters.secondary.InMemoryAdapter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

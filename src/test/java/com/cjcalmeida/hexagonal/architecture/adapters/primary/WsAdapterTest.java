@@ -27,12 +27,11 @@ import com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.*;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.*;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -47,14 +46,10 @@ public class WsAdapterTest {
 
     @Mock
     private IGameUseCase business;
-
+    @InjectMocks
     private WsAdapter adapter;
-    private ObjectFactory factory = new ObjectFactory();
 
-    @Before
-    public void setUp() {
-        adapter = new WsAdapter(business);
-    }
+    private ObjectFactory factory = new ObjectFactory();
 
     @Test
     public void createGame_success() throws Exception{

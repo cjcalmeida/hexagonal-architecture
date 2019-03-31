@@ -27,7 +27,6 @@ import com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.*;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
-import com.cjcalmeida.hexagonal.architecture.infraestructure.adapter.primary.ws.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,7 +43,7 @@ import java.util.stream.Collectors;
  * Adapter to expose business logic as SOAP Service
  */
 @Slf4j
-@WebService(endpointInterface = "GamePort")
+@WebService(endpointInterface = "com.cjcalmeida.hexagonal.architecture.adapters.primary.ws.GamePort")
 public class WsAdapter implements GamePort {
 
     private IGameUseCase business;

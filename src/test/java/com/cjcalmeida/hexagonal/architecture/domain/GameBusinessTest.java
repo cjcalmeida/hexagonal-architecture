@@ -26,12 +26,11 @@ package com.cjcalmeida.hexagonal.architecture.domain;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameRepositoryPort;
-import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -46,12 +45,8 @@ public class GameBusinessTest {
     @Mock
     private IGameRepositoryPort infrastructure;
 
-    private IGameUseCase business;
-
-    @Before
-    public void setUp() throws Exception {
-        business = new GameBusiness(infrastructure);
-    }
+    @InjectMocks
+    private GameBusiness business;
 
     @Test
     public void create_with_no_error() throws Exception {

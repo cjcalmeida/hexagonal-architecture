@@ -26,10 +26,7 @@ package com.cjcalmeida.hexagonal.architecture.adapters.primary;
 import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -181,7 +178,8 @@ public class RestAdapter {
     /**
      * API View of Game Domain (basic fields only)
      */
-    @Data
+    @Getter
+    @Setter
     @NoArgsConstructor
     public static class GameRepresentation {
         private String title;
@@ -192,7 +190,8 @@ public class RestAdapter {
     /**
      * Api View of Game Domain (full fields)
      */
-    @Data
+    @Setter
+    @Getter
     @NoArgsConstructor
     public static class FullGameRepresentation extends GameRepresentation{
         private Long id;

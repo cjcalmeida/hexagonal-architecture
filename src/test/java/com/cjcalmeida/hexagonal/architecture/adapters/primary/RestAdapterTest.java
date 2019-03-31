@@ -27,10 +27,10 @@ import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -47,12 +47,8 @@ public class RestAdapterTest {
     @Mock
     private IGameUseCase business;
 
+    @InjectMocks
     private RestAdapter adapter;
-
-    @Before
-    public void setUp() throws Exception {
-        adapter = new RestAdapter(business);
-    }
 
     @Test
     public void create() throws Exception{

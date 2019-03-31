@@ -27,7 +27,9 @@ import com.cjcalmeida.hexagonal.architecture.domain.model.Game;
 import com.cjcalmeida.hexagonal.architecture.domain.model.GameExceptions;
 import com.cjcalmeida.hexagonal.architecture.domain.port.IGameUseCase;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
@@ -116,17 +118,18 @@ public class WebAdapter {
      */
     @PostMapping("/web/game/new")
     public String create(@RequestParam Map<String, String> game, Model model) {
-        if(game == null || game.isEmpty()){
-            model.addAttribute("error", "game.data.required");
-        }
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            business.create(Game.builder()
-                    .title(game.get("title"))
-                    .description(game.get("description"))
-                    .releaseDate(format.parse(game.get("release")))
-            .build());
-            return redirect();
+            if(game == null || game.isEmpty()){
+                model.addAttribute("error", "game.data.required");
+            }else {
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                business.create(Game.builder()
+                        .title(game.get("title"))
+                        .description(game.get("description"))
+                        .releaseDate(format.parse(game.get("release")))
+                        .build());
+                return redirect();
+            }
         }catch (ParseException e){
             log.error("Parsing Exception", e);
             model.addAttribute("error","game.data.format.invalid");
@@ -185,7 +188,8 @@ public class WebAdapter {
     /**
      * Game View to Web Pages
      */
-    @Data
+    @Getter
+    @Setter
     @NoArgsConstructor
     public static class GameView {
         private Long id;

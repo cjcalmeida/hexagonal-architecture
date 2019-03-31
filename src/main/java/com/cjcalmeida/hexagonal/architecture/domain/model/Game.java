@@ -24,7 +24,8 @@
 package com.cjcalmeida.hexagonal.architecture.domain.model;
 
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -34,7 +35,8 @@ import java.util.Date;
  * Game Domain representation
  * Imutable by default
  */
-@Value
+@Getter
+@Setter
 @Builder
 public class Game {
 

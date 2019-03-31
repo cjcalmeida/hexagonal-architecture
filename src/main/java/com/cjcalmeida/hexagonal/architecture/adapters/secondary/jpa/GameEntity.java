@@ -23,8 +23,7 @@
 
 package com.cjcalmeida.hexagonal.architecture.adapters.secondary.jpa;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +32,8 @@ import java.util.Date;
 /**
  * Entity representation of Game Domain Model
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "Game")
