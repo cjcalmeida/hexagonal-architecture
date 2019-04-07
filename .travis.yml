@@ -22,6 +22,8 @@ jobs:
         - mvn surefire:test
         - echo "Reporting..."
         - mvn jacoco:report
+        - echo "Upload Report to Codecov"
+        - bash <(curl -s https://codecov.io/bash)
     - stage: package
       install: true
       script:
@@ -29,5 +31,3 @@ jobs:
         - mvn jar:jar
         - echo "Repackaging..."
         - mvn spring-boot:repackage
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
