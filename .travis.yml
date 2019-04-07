@@ -1,0 +1,28 @@
+language: java
+sudo: false
+jdk:
+  - openjdk8
+jobs:
+  include:
+    - stage: clean
+      script:
+        - echo "Cleaning..."
+        -  mvn clean
+    - stage: build
+      script:
+        - echo "Compiling..."
+        - mvn compiler:compile
+    - stage: test
+      script:
+        - echo "Testing..."
+        - mvn surefire:test
+        - echo "Reporting..."
+        - mvn jacoco:report
+    - stage: package
+      script:
+        - echo "Packaging..."
+        - mvn jar:jar
+        - echo "Repackaging..."
+        - mvn spring-boot:repackage
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
