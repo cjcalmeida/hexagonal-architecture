@@ -3,31 +3,7 @@ sudo: false
 jdk:
   - openjdk8
 install: true
-jobs:
-  include:
-    - stage: clean
-      install: true
-      script:
-        - echo "Cleaning..."
-        -  mvn clean
-    - stage: build
-      install: true
-      script:
-        - echo "Compiling..."
-        - mvn compiler:compile
-    - stage: test
-      install: true
-      script:
-        - echo "Testing..."
-        - mvn surefire:test
-        - echo "Reporting..."
-        - mvn jacoco:report
-        - echo "Upload Report to Codecov"
-        - bash <(curl -s https://codecov.io/bash)
-    - stage: package
-      install: true
-      script:
-        - echo "Packaging..."
-        - mvn jar:jar
-        - echo "Repackaging..."
-        - mvn spring-boot:repackage
+script:
+  - mvn clean package
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

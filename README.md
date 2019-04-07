@@ -2,6 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/cjcalmeida/hexagonal-architecture.svg?branch=master)](https://travis-ci.org/cjcalmeida/hexagonal-architecture.svg?branch=master)
 [![Codecov](https://codecov.io/gh/cjcalmeida/hexagonal-architecture/branch/master/graph/badge.svg)](https://codecov.io/gh/cjcalmeida/hexagonal-architecture)
+
 Sample project that implements a Create, List and Search operations of 
 Game Catalog System Admin using Hexagonal Architecture Pattern.
 
