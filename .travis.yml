@@ -2,28 +2,28 @@ language: java
 sudo: false
 jdk:
   - openjdk8
-install: false
+install: true
 jobs:
   include:
     - stage: clean
-      install: false
+      install: true
       script:
         - echo "Cleaning..."
         -  mvn clean
     - stage: build
-      install: false
+      install: true
       script:
         - echo "Compiling..."
         - mvn compiler:compile
     - stage: test
-      install: false
+      install: true
       script:
         - echo "Testing..."
         - mvn surefire:test
         - echo "Reporting..."
         - mvn jacoco:report
     - stage: package
-      install: false
+      install: true
       script:
         - echo "Packaging..."
         - mvn jar:jar
