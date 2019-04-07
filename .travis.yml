@@ -6,20 +6,24 @@ install: false
 jobs:
   include:
     - stage: clean
+      install: false
       script:
         - echo "Cleaning..."
         -  mvn clean
     - stage: build
+      install: false
       script:
         - echo "Compiling..."
         - mvn compiler:compile
     - stage: test
+      install: false
       script:
         - echo "Testing..."
         - mvn surefire:test
         - echo "Reporting..."
         - mvn jacoco:report
     - stage: package
+      install: false
       script:
         - echo "Packaging..."
         - mvn jar:jar
