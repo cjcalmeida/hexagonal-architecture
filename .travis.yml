@@ -2,6 +2,7 @@ language: java
 sudo: false
 jdk:
   - openjdk8
+install: false
 jobs:
   include:
     - stage: clean
