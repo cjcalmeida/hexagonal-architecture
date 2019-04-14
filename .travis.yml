@@ -17,8 +17,11 @@ script:
 # Post proccess after success build
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+# Deploy to Heroku
 deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_TOKEN
   app: hexagonal-architecture
+  on:
+    repo: cjcalmeida/hexagonal-architecture

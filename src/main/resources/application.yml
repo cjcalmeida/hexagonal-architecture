@@ -1,7 +1,4 @@
 spring:
-  profiles:
-    active:
-      - heroku
   data:
     jpa:
       repositories:
