@@ -66,4 +66,4 @@ spring:
   profiles: heroku
   profiles.include: api,ws,web,jpa
 server:
-  port: $PORT
+  port: ${PORT}
