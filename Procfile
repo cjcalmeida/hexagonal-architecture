@@ -1,2 +1,2 @@
 release: ./heroku-release.sh
-web: java -jar app.jar
+web: java $JAVA_OPTS -jar app.jar
