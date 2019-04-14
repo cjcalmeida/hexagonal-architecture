@@ -1,9 +1,19 @@
+# Project Language
 language: java
+# Don't use sudo
 sudo: false
+# Set Branch that trigger CI Pipeline
+branches:
+  only:
+    - master
+# JDK Version
 jdk:
   - openjdk8
+# Skip default Install Phase
 install: true
+# Build Script
 script:
   - mvn clean package
+# Post proccess after success build
 after_success:
   - bash <(curl -s https://codecov.io/bash)
