@@ -11,6 +11,10 @@ jdk:
   - openjdk8
 # Skip default Install Phase
 install: true
+# Cache /.m2 to speed up builds
+cache: 
+  directories:
+    - $HOME/.m2
 # Build Script
 script:
   - mvn clean package
