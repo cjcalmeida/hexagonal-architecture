@@ -88,6 +88,10 @@ public class WebAdapter {
                 model.addAttribute("query", query);
             } else {
                 results = business.listAll();
+                int size = results.size();
+                if(size > 1){
+                    System.out.println("Nova regra de negocio");
+                }
             }
             model.addAttribute("games", results);
         }catch (GameExceptions.GameNotFoundException e){
