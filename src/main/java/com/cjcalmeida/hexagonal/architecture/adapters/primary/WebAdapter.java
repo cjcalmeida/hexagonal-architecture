@@ -88,6 +88,12 @@ public class WebAdapter {
                 model.addAttribute("query", query);
             } else {
                 results = business.listAll();
+                int size = results.size();
+                if(size > 0) {
+                    size = size +1;
+                }else{
+                    size = 0;
+                }
             }
             model.addAttribute("games", results);
         }catch (GameExceptions.GameNotFoundException e){
